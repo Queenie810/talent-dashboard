@@ -653,8 +653,8 @@ mkBar('c2-reason',RSN_L,RSN_V,RSN_V.map(function(){return '#f87171';}),true);
 // ═══════════════════════════════════════════
 var TRIAL_LIST = [
   {name:'娜丁(丁增德吉)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-15',age:26,prev:'腾讯音乐娱乐（上海）有限公司',edu:'硕士研究生',school:'美国哥伦比亚大学'},
-  {name:'柏瑞(许冰)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-10-22',age:30,prev:'携程集团',edu:'本科',school:'纽约大学'},
-  {name:'曼曼(刘佳)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-10-27',age:29,prev:'华为',edu:'硕士研究生',school:'香港中文大学'},
+  {name:'柏瑞(许冰)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-10-22',age:30,prev:'携程集团',edu:'本科',school:'纽约大学',gd:true},
+  {name:'曼曼(刘佳)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-10-27',age:29,prev:'华为',edu:'硕士研究生',school:'香港中文大学',gd:true},
   {name:'梁爽(梁爽)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-29',age:26,prev:'上海京东鸿为贸易有限公司',edu:'本科',school:'北京工商大学'},
   {name:'千凝(王梦巧)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-11-12',age:26,prev:'上海得物信息集团有限公司',edu:'本科',school:'河海大学'},
   {name:'芙芙(傅媛媛)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-12-03',age:24,prev:'北京达佳互联信息技术有限公司',edu:'本科',school:'宁波大学'},
@@ -693,7 +693,7 @@ function renderTrialTable(dept) {
   list.forEach(function(p) {
     var eduColor = p.edu.indexOf('硕士') >= 0 ? 'color:#2563eb' : '';
     rows += '<tr>' +
-      '<td><strong>' + p.name + '</strong></td>' +
+      '<td><strong>' + p.name + '</strong>' + (p.gd ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#dcfce7;color:#16a34a;font-weight:600;vertical-align:middle">已GD</span>' : '') + '</td>' +
       '<td>' + p.dept + '</td>' +
       '<td>' + p.manager + '</td>' +
       '<td>' + p.join + '</td>' +
