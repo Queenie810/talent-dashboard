@@ -119,16 +119,30 @@ table.dt tr:hover td{background:#fafafa}
 
 <div class="panel" id="panel-1">
   <div class="section-title">新人 Landing 概览</div>
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="kpi-value">64</div><div class="kpi-label">入职≤1年人数</div></div>
-    <div class="kpi-card"><div class="kpi-value">35%</div><div class="kpi-label">新人占比</div></div>
-    <div class="kpi-card"><div class="kpi-value">32人</div><div class="kpi-label">试用期中人数</div></div>
-    <div class="kpi-card"><div class="kpi-value">17.6%</div><div class="kpi-label">试用期占比</div></div>
-    <div class="kpi-card"><div class="kpi-value">4</div><div class="kpi-label">5年+老员工</div></div>
+  <div class="filter-bar">
+    <label>小组：</label>
+    <button class="dept-btn active" onclick="setDept1(this,'全部')">全部</button>
+    <button class="dept-btn" onclick="setDept1(this,'媒介与项目管理')">媒介与项目管理</button>
+    <button class="dept-btn" onclick="setDept1(this,'商业市场部')">商业市场部</button>
+    <button class="dept-btn" onclick="setDept1(this,'互动营销')">互动营销</button>
+    <button class="dept-btn" onclick="setDept1(this,'行业营销一组')">行业营销一组</button>
+    <button class="dept-btn" onclick="setDept1(this,'用户市场组')">用户市场组</button>
+    <button class="dept-btn" onclick="setDept1(this,'行业营销三组')">行业营销三组</button>
+    <button class="dept-btn" onclick="setDept1(this,'行业营销四组')">行业营销四组</button>
+    <button class="dept-btn" onclick="setDept1(this,'品牌及商家赋能')">品牌及商家赋能</button>
+    <button class="dept-btn" onclick="setDept1(this,'行业营销二组')">行业营销二组</button>
+    <button class="dept-btn" onclick="setDept1(this,'平台大事件')">平台大事件</button>
+    <button class="dept-btn" onclick="setDept1(this,'娱乐营销')">娱乐营销</button>
+    <button class="dept-btn" onclick="setDept1(this,'节点营销')">节点营销</button>
+    <button class="dept-btn" onclick="setDept1(this,'内容运营')">内容运营</button>
+    <button class="dept-btn" onclick="setDept1(this,'业务培训')">业务培训</button>
   </div>
-  <div class="chart-grid">
-    <div class="chart-card"><h3>司龄分布（人数）</h3><div class="cw"><canvas id="c1-tenure"></canvas></div></div>
-    <div class="chart-card"><h3>学历分布（全员）</h3><div class="cw"><canvas id="c1-edu"></canvas></div></div>
+  <div class="kpi-row" id="p1-kpi">
+    <div class="kpi-card"><div class="kpi-value" id="p1-total">182</div><div class="kpi-label">在职总人数</div></div>
+    <div class="kpi-card"><div class="kpi-value" id="p1-le1y">64</div><div class="kpi-label">入职≤1年人数</div></div>
+    <div class="kpi-card"><div class="kpi-value" id="p1-newpct">35%</div><div class="kpi-label">新人占比</div></div>
+    <div class="kpi-card"><div class="kpi-value" id="p1-trial">32</div><div class="kpi-label">试用期中人数</div></div>
+    <div class="kpi-card"><div class="kpi-value" id="p1-trialpct">17.6%</div><div class="kpi-label">试用期占比</div></div>
   </div>
   <div class="section-title">Landing 关注点</div>
   <div class="chart-card">
@@ -608,9 +622,7 @@ renderPerfSection('2025年度绩效');
 // ═══════════════════════════════════════════
 
 // 目标对比
-// Panel1
-mkBar('c1-tenure',TEN_L,TEN_V,['#fecaca','#fca5a5','#f87171','#ef4444','#991b1b'],false);
-mkPie('c1-edu',['本科','硕士研究生','MBA','专科及以下'],[119,61,1,1],['#60a5fa','#34d399','#a78bfa','#fbbf24']);
+// Panel1 (charts removed, KPI driven by setDept1)
 
 // Panel2
 mkPie('c2-type',LFT_L,LFT_V,['#ef4444','#f59e0b']);
@@ -633,6 +645,40 @@ mkBar('c2-reason',RSN_L,RSN_V,RSN_V.map(function(){return '#f87171';}),true);
     {label:'Leader',data:tags.map(function(t){return LDR_TAG[t]||0;}),backgroundColor:'#34d399',borderRadius:4}
   ]},plugins:[barLabel],options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}}}});
 })();
+
+// ═══════════════════════════════════════════
+// Panel1 新人Landing 部门筛选数据
+// ═══════════════════════════════════════════
+var LANDING_DATA = {
+  '全部':        {total:182, le1y:64, trial:32},
+  '媒介与项目管理': {total:25,  le1y:7,  trial:6},
+  '商业市场部':   {total:23,  le1y:10, trial:5},
+  '互动营销':    {total:21,  le1y:7,  trial:3},
+  '行业营销一组': {total:17,  le1y:8,  trial:3},
+  '用户市场组':   {total:12,  le1y:4,  trial:2},
+  '行业营销三组': {total:12,  le1y:5,  trial:3},
+  '行业营销四组': {total:11,  le1y:5,  trial:2},
+  '品牌及商家赋能':{total:11,  le1y:2,  trial:2},
+  '行业营销二组': {total:10,  le1y:4,  trial:2},
+  '平台大事件':   {total:10,  le1y:4,  trial:1},
+  '娱乐营销':    {total:9,   le1y:2,  trial:0},
+  '节点营销':    {total:8,   le1y:3,  trial:2},
+  '内容运营':    {total:7,   le1y:2,  trial:1},
+  '业务培训':    {total:5,   le1y:1,  trial:0}
+};
+
+function setDept1(btn, dept) {
+  document.querySelectorAll('#panel-1 .dept-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var d = LANDING_DATA[dept] || LANDING_DATA['全部'];
+  var newpct = d.total > 0 ? (d.le1y / d.total * 100).toFixed(1) + '%' : '0%';
+  var trialpct = d.total > 0 ? (d.trial / d.total * 100).toFixed(1) + '%' : '0%';
+  document.getElementById('p1-total').textContent = d.total;
+  document.getElementById('p1-le1y').textContent = d.le1y;
+  document.getElementById('p1-newpct').textContent = newpct;
+  document.getElementById('p1-trial').textContent = d.trial;
+  document.getElementById('p1-trialpct').textContent = trialpct;
+}
 
 function setDept2(btn,dept){
   document.querySelectorAll('#panel-2 .dept-btn').forEach(function(b){b.classList.remove('active');});
