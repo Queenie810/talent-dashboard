@@ -655,7 +655,7 @@ var TRIAL_LIST = [
   {name:'大鱼(张瑜)',dept:'节点营销',manager:'未希(施维)',join:'2025-09-10',age:29,prev:'知乎',edu:'硕士研究生',school:'英国利兹大学',status:'已转正',gd:true},
   {name:'斯比(张琦)',dept:'商业市场部',manager:'又思(徐速)',join:'2025-09-10',age:31,prev:'',edu:'本科',school:'东华大学',status:'已转正',gd:true},
   {name:'井野(魏欣)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-09-10',age:28,prev:'',edu:'硕士研究生',school:'杜伦大学',status:'已转正',gd:true},
-  {name:'小枝(王笑妍)',dept:'娱乐营销',manager:'科林(罗意林)',join:'2025-09-19',age:31,prev:'',edu:'本科',school:'浙江财经大学',status:'已转正'},
+  {name:'小枝(王笑妍)',dept:'娱乐营销',manager:'科林(罗意林)',join:'2025-09-19',age:31,prev:'',edu:'本科',school:'浙江财经大学',status:'已转正',note:'待汰换'},
   {name:'雪梨(陈姝羽)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-09-22',age:26,prev:'',edu:'硕士研究生',school:'剑桥大学',status:'已转正',gd:true},
   {name:'弯弯(唐婉)',dept:'商业市场部',manager:'又思(徐速)',join:'2025-09-29',age:30,prev:'',edu:'本科',school:'西北大学',status:'已转正',gd:true},
   {name:'娜丁(丁增德吉)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-15',age:26,prev:'腾讯音乐娱乐（上海）有限公司',edu:'硕士研究生',school:'美国哥伦比亚大学',status:'试用期中'},
@@ -706,8 +706,9 @@ function renderTrialTable(dept) {
       : 'background:#fee2e2;color:#b91c1c';
     var statusTag = '<span style="display:inline-block;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:600;' + statusStyle + '">' + p.status + '</span>';
     var gdTag = p.gd ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#dcfce7;color:#16a34a;font-weight:600;vertical-align:middle">已GD</span>' : '';
+    var noteTag = p.note ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#fee2e2;color:#b91c1c;font-weight:600;vertical-align:middle">' + p.note + '</span>' : '';
     rows += '<tr>' +
-      '<td><strong>' + p.name + '</strong>' + gdTag + '</td>' +
+      '<td><strong>' + p.name + '</strong>' + gdTag + noteTag + '</td>' +
       '<td>' + statusTag + '</td>' +
       '<td>' + p.dept + '</td>' +
       '<td>' + p.manager + '</td>' +
