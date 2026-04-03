@@ -146,12 +146,12 @@ table.dt tr:hover td{background:#fafafa}
   </div>
 
 
-  <div class="section-title">📋 试用期名单</div>
+  <div class="section-title">📋 新人名单</div>
   <div class="chart-card" style="padding:12px 16px">
-    <div style="font-size:12px;color:#888;margin-bottom:10px">共 <span id="trial-count">31</span> 人在试用期（已排除离职流程中人员）</div>
+    <div style="font-size:12px;color:#888;margin-bottom:10px">数据范围：2025年9月及以后入职的在职员工 · 共 <span id="trial-count">38</span> 人&nbsp;&nbsp;|&nbsp;&nbsp;试用期中 <span id="trial-inprogress">31</span> 人 · 已转正 <span id="trial-passed">6</span> 人 · 待离职 <span id="trial-leaving">1</span> 人</div>
     <div style="overflow-x:auto">
     <table class="dt" id="trial-table" style="min-width:800px">
-      <tr><th>薯名</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>
+      <tr><th>薯名</th><th>状态</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>
     </table>
     </div>
   </div>
@@ -652,48 +652,63 @@ mkBar('c2-reason',RSN_L,RSN_V,RSN_V.map(function(){return '#f87171';}),true);
 // Panel1 试用期名单数据
 // ═══════════════════════════════════════════
 var TRIAL_LIST = [
-  {name:'娜丁(丁增德吉)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-15',age:26,prev:'腾讯音乐娱乐（上海）有限公司',edu:'硕士研究生',school:'美国哥伦比亚大学'},
-  {name:'柏瑞(许冰)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-10-22',age:30,prev:'携程集团',edu:'本科',school:'纽约大学',gd:true},
-  {name:'曼曼(刘佳)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-10-27',age:29,prev:'华为',edu:'硕士研究生',school:'香港中文大学',gd:true},
-  {name:'梁爽(梁爽)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-29',age:26,prev:'上海京东鸿为贸易有限公司',edu:'本科',school:'北京工商大学'},
-  {name:'千凝(王梦巧)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-11-12',age:26,prev:'上海得物信息集团有限公司',edu:'本科',school:'河海大学'},
-  {name:'芙芙(傅媛媛)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-12-03',age:24,prev:'北京达佳互联信息技术有限公司',edu:'本科',school:'宁波大学'},
-  {name:'青鸟(崔玫)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:26,prev:'拼多多',edu:'本科',school:'上海对外经贸大学'},
-  {name:'兰莉(谭钶颖)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:25,prev:'深圳方程豹汽车销售有限责任公司',edu:'硕士研究生',school:'香港大学'},
-  {name:'碧琪(邬佳宁)',dept:'内容运营',manager:'地球(邹瑞)',join:'2025-12-10',age:26,prev:'浙江天猫技术有限公司',edu:'本科',school:'四川大学'},
-  {name:'玟星(伍芳萍)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-10',age:31,prev:'湖南快乐阳光互动传媒有限公司',edu:'本科',school:'上海大学'},
-  {name:'董董(董海羽)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-12-12',age:30,prev:'法本信息科技有限公司',edu:'硕士研究生',school:'纽卡斯尔大学'},
-  {name:'和和(张彤)',dept:'平台大事件',manager:'佩吉(马小婷)',join:'2025-12-15',age:30,prev:'北京卡路里科技有限公司',edu:'本科',school:'吉林财经大学'},
-  {name:'美叽(韩亦忱)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-12-24',age:23,prev:'通用汽车中国',edu:'本科',school:'中国劳动关系学院'},
-  {name:'之零(苏婧葭)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-01-05',age:27,prev:'雅诗兰黛（上海）商贸有限公司',edu:'本科',school:'多伦多大学'},
-  {name:'鱼蛋(蒋璐蔚)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-01-05',age:27,prev:'携程旅游网络技术(上海)有限公司',edu:'本科',school:'国际关系学院'},
-  {name:'可儿(李可尔)',dept:'节点营销',manager:'未希(施维)',join:'2026-01-19',age:24,prev:'—',edu:'硕士研究生',school:'墨尔本大学'},
-  {name:'伊瞳(张溪倬)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-01-19',age:32,prev:'百度',edu:'本科',school:'北京城市学院'},
-  {name:'千佳(邓林兮)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-01-26',age:24,prev:'深圳市大疆创新科技有限公司',edu:'本科',school:'同济大学'},
-  {name:'思怡(张悦)',dept:'行业营销三组',manager:'存希(林晨)',join:'2026-02-02',age:30,prev:'哈啰',edu:'硕士研究生',school:'厦门大学'},
-  {name:'临戈(汤斯麟)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-06',age:25,prev:'北京达佳互联信息技术有限公司',edu:'硕士研究生',school:'北京大学'},
-  {name:'荻野(田凯雯)',dept:'互动营销',manager:'吉森(王成钢)',join:'2026-02-09',age:28,prev:'字节跳动-懂车帝',edu:'硕士研究生',school:'英国格拉斯哥大学'},
-  {name:'敦子(陶伊晴)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2026-02-09',age:29,prev:'字节跳动',edu:'硕士研究生',school:'Durham University'},
-  {name:'赤也(章梓禧)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-02-11',age:25,prev:'腾讯',edu:'硕士研究生',school:'香港中文大学'},
-  {name:'萧遥(刘雪杨)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-02-25',age:28,prev:'沃尔沃汽车',edu:'硕士研究生',school:'纽约大学'},
-  {name:'朱诺(廖可萱)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-27',age:26,prev:'上海容么么数字科技有限公司',edu:'硕士研究生',school:'伦敦政治经济学院'},
-  {name:'流明(余屹轩)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-03-09',age:25,prev:'—',edu:'硕士研究生',school:'伦敦政治经济学院'},
-  {name:'彭花(沈玥)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-11',age:30,prev:'上海今日头条网络技术有限公司',edu:'硕士研究生',school:'香港浸会大学'},
-  {name:'小唯(孙鲁燕)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-03-13',age:28,prev:'字节跳动',edu:'硕士研究生',school:'伦敦大学学院'},
-  {name:'藏原(李奕飞)',dept:'节点营销',manager:'未希(施维)',join:'2026-03-23',age:25,prev:'—',edu:'硕士研究生',school:'伦敦大学学院'},
-  {name:'绿子(赵阑婷)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-23',age:31,prev:'内蒙古伊利实业集团股份有限公司',edu:'本科',school:'北京工商大学'},
-  {name:'莫妮(黄婷婷)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-03-25',age:27,prev:'万科',edu:'硕士研究生',school:'复旦大学'}
+  {name:'大鱼(张瑜)',dept:'节点营销',manager:'未希(施维)',join:'2025-09-10',age:29,prev:'知乎',edu:'硕士研究生',school:'英国利兹大学',status:'已转正',gd:true},
+  {name:'斯比(张琦)',dept:'商业市场部',manager:'又思(徐速)',join:'2025-09-10',age:31,prev:'',edu:'本科',school:'东华大学',status:'已转正',gd:true},
+  {name:'井野(魏欣)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-09-10',age:28,prev:'',edu:'硕士研究生',school:'杜伦大学',status:'已转正',gd:true},
+  {name:'小枝(王笑妍)',dept:'娱乐营销',manager:'科林(罗意林)',join:'2025-09-19',age:31,prev:'',edu:'本科',school:'浙江财经大学',status:'已转正'},
+  {name:'雪梨(陈姝羽)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-09-22',age:26,prev:'',edu:'硕士研究生',school:'剑桥大学',status:'已转正',gd:true},
+  {name:'弯弯(唐婉)',dept:'商业市场部',manager:'又思(徐速)',join:'2025-09-29',age:30,prev:'',edu:'本科',school:'西北大学',status:'已转正',gd:true},
+  {name:'娜丁(丁增德吉)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-15',age:26,prev:'腾讯音乐娱乐（上海）有限公司',edu:'硕士研究生',school:'美国哥伦比亚大学',status:'试用期中'},
+  {name:'柏瑞(许冰)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-10-22',age:30,prev:'携程集团',edu:'本科',school:'纽约大学',status:'试用期中',gd:true},
+  {name:'曼曼(刘佳)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-10-27',age:29,prev:'华为',edu:'硕士研究生',school:'香港中文大学',status:'试用期中',gd:true},
+  {name:'梁爽(梁爽)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-29',age:26,prev:'上海京东鸿为贸易有限公司',edu:'本科',school:'北京工商大学',status:'试用期中'},
+  {name:'千凝(王梦巧)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-11-12',age:26,prev:'上海得物信息集团有限公司',edu:'本科',school:'河海大学',status:'试用期中'},
+  {name:'芙芙(傅媛媛)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-12-03',age:24,prev:'北京达佳互联信息技术有限公司',edu:'本科',school:'宁波大学',status:'试用期中'},
+  {name:'青鸟(崔玫)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:26,prev:'拼多多',edu:'本科',school:'上海对外经贸大学',status:'试用期中'},
+  {name:'兰莉(谭钶颖)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:25,prev:'深圳方程豹汽车销售有限责任公司',edu:'硕士研究生',school:'香港大学',status:'试用期中'},
+  {name:'碧琪(邬佳宁)',dept:'内容运营',manager:'地球(邹瑞)',join:'2025-12-10',age:26,prev:'浙江天猫技术有限公司',edu:'本科',school:'四川大学',status:'试用期中'},
+  {name:'玟星(伍芳萍)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-10',age:31,prev:'湖南快乐阳光互动传媒有限公司',edu:'本科',school:'上海大学',status:'试用期中'},
+  {name:'董董(董海羽)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-12-12',age:30,prev:'法本信息科技有限公司',edu:'硕士研究生',school:'纽卡斯尔大学',status:'试用期中'},
+  {name:'和和(张彤)',dept:'平台大事件',manager:'佩吉(马小婷)',join:'2025-12-15',age:30,prev:'北京卡路里科技有限公司',edu:'本科',school:'吉林财经大学',status:'试用期中'},
+  {name:'美叽(韩亦忱)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-12-24',age:23,prev:'通用汽车中国',edu:'本科',school:'中国劳动关系学院',status:'试用期中'},
+  {name:'之零(苏婧葭)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-01-05',age:27,prev:'雅诗兰黛（上海）商贸有限公司',edu:'本科',school:'多伦多大学',status:'试用期中'},
+  {name:'鱼蛋(蒋璐蔚)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-01-05',age:27,prev:'携程旅游网络技术(上海)有限公司',edu:'本科',school:'国际关系学院',status:'试用期中'},
+  {name:'可儿(李可尔)',dept:'节点营销',manager:'未希(施维)',join:'2026-01-19',age:24,prev:'—',edu:'硕士研究生',school:'墨尔本大学',status:'试用期中'},
+  {name:'伊瞳(张溪倬)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-01-19',age:32,prev:'百度',edu:'本科',school:'北京城市学院',status:'试用期中'},
+  {name:'千佳(邓林兮)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-01-26',age:24,prev:'深圳市大疆创新科技有限公司',edu:'本科',school:'同济大学',status:'试用期中'},
+  {name:'思怡(张悦)',dept:'行业营销三组',manager:'存希(林晨)',join:'2026-02-02',age:30,prev:'哈啰',edu:'硕士研究生',school:'厦门大学',status:'试用期中'},
+  {name:'临戈(汤斯麟)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-06',age:25,prev:'北京达佳互联信息技术有限公司',edu:'硕士研究生',school:'北京大学',status:'试用期中'},
+  {name:'敦子(陶伊晴)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2026-02-09',age:29,prev:'字节跳动',edu:'硕士研究生',school:'Durham University',status:'试用期中'},
+  {name:'荻野(田凯雯)',dept:'互动营销',manager:'吉森(王成钢)',join:'2026-02-09',age:28,prev:'字节跳动-懂车帝',edu:'硕士研究生',school:'英国格拉斯哥大学',status:'试用期中'},
+  {name:'赤也(章梓禧)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-02-11',age:25,prev:'腾讯',edu:'硕士研究生',school:'香港中文大学',status:'试用期中'},
+  {name:'启夏(蒋演)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-02-13',age:27,prev:'',edu:'硕士研究生',school:'曼彻斯特大学',status:'待离职'},
+  {name:'萧遥(刘雪杨)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-02-25',age:28,prev:'沃尔沃汽车',edu:'硕士研究生',school:'纽约大学',status:'试用期中'},
+  {name:'朱诺(廖可萱)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-27',age:26,prev:'上海容么么数字科技有限公司',edu:'硕士研究生',school:'伦敦政治经济学院',status:'试用期中'},
+  {name:'流明(余屹轩)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-03-09',age:25,prev:'—',edu:'硕士研究生',school:'伦敦政治经济学院',status:'试用期中'},
+  {name:'彭花(沈玥)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-11',age:30,prev:'上海今日头条网络技术有限公司',edu:'硕士研究生',school:'香港浸会大学',status:'试用期中'},
+  {name:'小唯(孙鲁燕)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-03-13',age:28,prev:'字节跳动',edu:'硕士研究生',school:'伦敦大学学院',status:'试用期中'},
+  {name:'藏原(李奕飞)',dept:'节点营销',manager:'未希(施维)',join:'2026-03-23',age:25,prev:'—',edu:'硕士研究生',school:'伦敦大学学院',status:'试用期中'},
+  {name:'绿子(赵阑婷)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-23',age:31,prev:'内蒙古伊利实业集团股份有限公司',edu:'本科',school:'北京工商大学',status:'试用期中'},
+  {name:'莫妮(黄婷婷)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-03-25',age:27,prev:'万科',edu:'硕士研究生',school:'复旦大学',status:'试用期中'}
 ];
 
 function renderTrialTable(dept) {
   var list = dept === '全部' ? TRIAL_LIST : TRIAL_LIST.filter(function(p){ return p.dept === dept; });
   var tb = document.getElementById('trial-table');
   if (!tb) return;
-  var rows = '<tr><th>薯名</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>';
+  var rows = '<tr><th>薯名</th><th>状态</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>';
   list.forEach(function(p) {
     var eduColor = p.edu.indexOf('硕士') >= 0 ? 'color:#2563eb' : '';
+    var statusStyle = p.status === '试用期中'
+      ? 'background:#fef9c3;color:#854d0e'
+      : p.status === '已转正'
+      ? 'background:#dcfce7;color:#15803d'
+      : 'background:#fee2e2;color:#b91c1c';
+    var statusTag = '<span style="display:inline-block;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:600;' + statusStyle + '">' + p.status + '</span>';
+    var gdTag = p.gd ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#dcfce7;color:#16a34a;font-weight:600;vertical-align:middle">已GD</span>' : '';
     rows += '<tr>' +
-      '<td><strong>' + p.name + '</strong>' + (p.gd ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#dcfce7;color:#16a34a;font-weight:600;vertical-align:middle">已GD</span>' : '') + '</td>' +
+      '<td><strong>' + p.name + '</strong>' + gdTag + '</td>' +
+      '<td>' + statusTag + '</td>' +
       '<td>' + p.dept + '</td>' +
       '<td>' + p.manager + '</td>' +
       '<td>' + p.join + '</td>' +
@@ -704,8 +719,14 @@ function renderTrialTable(dept) {
       '</tr>';
   });
   tb.innerHTML = rows;
-  var cnt = document.getElementById('trial-count');
-  if (cnt) cnt.textContent = list.length;
+  var total = list.length;
+  var inprogress = list.filter(function(p){ return p.status === '试用期中'; }).length;
+  var passed = list.filter(function(p){ return p.status === '已转正'; }).length;
+  var leaving = list.filter(function(p){ return p.status === '待离职'; }).length;
+  var el = document.getElementById('trial-count'); if(el) el.textContent = total;
+  var el2 = document.getElementById('trial-inprogress'); if(el2) el2.textContent = inprogress;
+  var el3 = document.getElementById('trial-passed'); if(el3) el3.textContent = passed;
+  var el4 = document.getElementById('trial-leaving'); if(el4) el4.textContent = leaving;
 }
 
 // 页面加载时渲染全量
