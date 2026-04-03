@@ -146,6 +146,16 @@ table.dt tr:hover td{background:#fafafa}
   </div>
 
 
+  <div class="section-title">📋 试用期名单</div>
+  <div class="chart-card" style="padding:12px 16px">
+    <div style="font-size:12px;color:#888;margin-bottom:10px">共 <span id="trial-count">31</span> 人在试用期（已排除离职流程中人员）</div>
+    <div style="overflow-x:auto">
+    <table class="dt" id="trial-table" style="min-width:800px">
+      <tr><th>薯名</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>
+    </table>
+    </div>
+  </div>
+
   <div class="section-title">🎓 新人 GD 项目</div>
   <div class="chart-card" style="margin-bottom:16px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
@@ -639,6 +649,69 @@ mkBar('c2-reason',RSN_L,RSN_V,RSN_V.map(function(){return '#f87171';}),true);
 })();
 
 // ═══════════════════════════════════════════
+// Panel1 试用期名单数据
+// ═══════════════════════════════════════════
+var TRIAL_LIST = [
+  {name:'千凝(王梦巧)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-11-12',age:26,prev:'上海得物信息集团有限公司',edu:'本科',school:'河海大学'},
+  {name:'美叽(韩亦忱)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-12-24',age:23,prev:'通用汽车中国',edu:'本科',school:'中国劳动关系学院'},
+  {name:'荻野(田凯雯)',dept:'互动营销',manager:'吉森(王成钢)',join:'2026-02-09',age:28,prev:'字节跳动-懂车帝',edu:'硕士研究生',school:'英国格拉斯哥大学'},
+  {name:'碧琪(邬佳宁)',dept:'内容运营',manager:'地球(邹瑞)',join:'2025-12-10',age:26,prev:'浙江天猫技术有限公司',edu:'本科',school:'四川大学'},
+  {name:'临戈(汤斯麟)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-06',age:25,prev:'北京达佳互联信息技术有限公司',edu:'硕士研究生',school:'北京大学'},
+  {name:'朱诺(廖可萱)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-27',age:26,prev:'上海容么么数字科技有限公司',edu:'硕士研究生',school:'伦敦政治经济学院'},
+  {name:'之零(苏婧葭)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-01-05',age:27,prev:'雅诗兰黛（上海）商贸有限公司',edu:'本科',school:'多伦多大学'},
+  {name:'萧遥(刘雪杨)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-02-25',age:28,prev:'沃尔沃汽车',edu:'硕士研究生',school:'纽约大学'},
+  {name:'彭花(沈玥)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-11',age:30,prev:'上海今日头条网络技术有限公司',edu:'硕士研究生',school:'香港浸会大学'},
+  {name:'绿子(赵阑婷)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-23',age:31,prev:'内蒙古伊利实业集团股份有限公司',edu:'本科',school:'北京工商大学'},
+  {name:'青鸟(崔玫)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:26,prev:'拼多多',edu:'本科',school:'上海对外经贸大学'},
+  {name:'兰莉(谭钶颖)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:25,prev:'深圳方程豹汽车销售有限责任公司',edu:'硕士研究生',school:'香港大学'},
+  {name:'玟星(伍芳萍)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-10',age:31,prev:'湖南快乐阳光互动传媒有限公司',edu:'本科',school:'上海大学'},
+  {name:'千佳(邓林兮)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-01-26',age:24,prev:'深圳市大疆创新科技有限公司',edu:'本科',school:'同济大学'},
+  {name:'赤也(章梓禧)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-02-11',age:25,prev:'腾讯',edu:'硕士研究生',school:'香港中文大学'},
+  {name:'莫妮(黄婷婷)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-03-25',age:27,prev:'万科',edu:'硕士研究生',school:'复旦大学'},
+  {name:'和和(张彤)',dept:'平台大事件',manager:'佩吉(马小婷)',join:'2025-12-15',age:30,prev:'北京卡路里科技有限公司',edu:'本科',school:'吉林财经大学'},
+  {name:'鱼蛋(蒋璐蔚)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-01-05',age:27,prev:'携程旅游网络技术(上海)有限公司',edu:'本科',school:'国际关系学院'},
+  {name:'小唯(孙鲁燕)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-03-13',age:28,prev:'字节跳动',edu:'硕士研究生',school:'伦敦大学学院'},
+  {name:'可儿(李可尔)',dept:'节点营销',manager:'未希(施维)',join:'2026-01-19',age:24,prev:'—',edu:'硕士研究生',school:'墨尔本大学'},
+  {name:'藏原(李奕飞)',dept:'节点营销',manager:'未希(施维)',join:'2026-03-23',age:25,prev:'—',edu:'硕士研究生',school:'伦敦大学学院'},
+  {name:'柏瑞(许冰)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-10-22',age:30,prev:'携程集团',edu:'本科',school:'纽约大学'},
+  {name:'芙芙(傅媛媛)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-12-03',age:24,prev:'北京达佳互联信息技术有限公司',edu:'本科',school:'宁波大学'},
+  {name:'敦子(陶伊晴)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2026-02-09',age:29,prev:'字节跳动',edu:'硕士研究生',school:'Durham University'},
+  {name:'娜丁(丁增德吉)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-15',age:26,prev:'腾讯音乐娱乐（上海）有限公司',edu:'硕士研究生',school:'美国哥伦比亚大学'},
+  {name:'梁爽(梁爽)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-29',age:26,prev:'上海京东鸿为贸易有限公司',edu:'本科',school:'北京工商大学'},
+  {name:'思怡(张悦)',dept:'行业营销三组',manager:'存希(林晨)',join:'2026-02-02',age:30,prev:'哈啰',edu:'硕士研究生',school:'厦门大学'},
+  {name:'曼曼(刘佳)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-10-27',age:29,prev:'华为',edu:'硕士研究生',school:'香港中文大学'},
+  {name:'董董(董海羽)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-12-12',age:30,prev:'法本信息科技有限公司',edu:'硕士研究生',school:'纽卡斯尔大学'},
+  {name:'伊瞳(张溪倬)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-01-19',age:32,prev:'百度',edu:'本科',school:'北京城市学院'},
+  {name:'流明(余屹轩)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-03-09',age:25,prev:'—',edu:'硕士研究生',school:'伦敦政治经济学院'}
+];
+
+function renderTrialTable(dept) {
+  var list = dept === '全部' ? TRIAL_LIST : TRIAL_LIST.filter(function(p){ return p.dept === dept; });
+  var tb = document.getElementById('trial-table');
+  if (!tb) return;
+  var rows = '<tr><th>薯名</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>';
+  list.forEach(function(p) {
+    var eduColor = p.edu.indexOf('硕士') >= 0 ? 'color:#2563eb' : '';
+    rows += '<tr>' +
+      '<td><strong>' + p.name + '</strong></td>' +
+      '<td>' + p.dept + '</td>' +
+      '<td>' + p.manager + '</td>' +
+      '<td>' + p.join + '</td>' +
+      '<td>' + p.age + '岁</td>' +
+      '<td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="' + p.prev + '">' + (p.prev || '—') + '</td>' +
+      '<td style="' + eduColor + ';font-weight:600">' + p.edu + '</td>' +
+      '<td>' + p.school + '</td>' +
+      '</tr>';
+  });
+  tb.innerHTML = rows;
+  var cnt = document.getElementById('trial-count');
+  if (cnt) cnt.textContent = list.length;
+}
+
+// 页面加载时渲染全量
+(function(){ renderTrialTable('全部'); })();
+
+// ═══════════════════════════════════════════
 // Panel1 新人Landing 部门筛选数据
 // ═══════════════════════════════════════════
 var LANDING_DATA = {
@@ -670,6 +743,7 @@ function setDept1(btn, dept) {
   document.getElementById('p1-newpct').textContent = newpct;
   document.getElementById('p1-trial').textContent = d.trial;
   document.getElementById('p1-trialpct').textContent = trialpct;
+  renderTrialTable(dept);
 }
 
 function setDept2(btn,dept){
