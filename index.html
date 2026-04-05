@@ -1244,7 +1244,7 @@ var barLabel = {id:'barLabel',afterDatasetsDraw:function(chart){
 }};
 
 function mkBar(id,labels,data,colors,horiz){
-  var el=document.getElementById(id);if(!el)return null;
+  var el=document.getElementById(id);if(!el||typeof Chart==='undefined')return null;
   var ctx=el.getContext('2d');
   return new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderRadius:4}]},
     plugins:[barLabel],
@@ -1254,7 +1254,7 @@ function mkBar(id,labels,data,colors,horiz){
               y:{grid:{display:horiz},beginAtZero:true,ticks:{font:{size:10}}}}}});
 }
 function mkPie(id,labels,data,colors){
-  var el=document.getElementById(id);if(!el)return null;
+  var el=document.getElementById(id);if(!el||typeof Chart==='undefined')return null;
   var ctx=el.getContext('2d');
   return new Chart(ctx,{type:'doughnut',data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderWidth:2}]},
     plugins:[centerText,pieLabel],
@@ -1292,7 +1292,7 @@ function renderPerfSection(rname){
   var idxs = SK.map(function(s,i){return (deptPerf[s]||0)>0?i:-1;}).filter(function(i){return i>=0;});
   if(perfPieChart){perfPieChart.destroy();perfPieChart=null;}
   var pieEl = document.getElementById('c0-perf-pie');
-  if(pieEl) perfPieChart = new Chart(pieEl.getContext('2d'),{type:'doughnut',
+  if(pieEl&&typeof Chart!=='undefined') perfPieChart = new Chart(pieEl.getContext('2d'),{type:'doughnut',
     data:{labels:idxs.map(function(i){return SK[i];}),datasets:[{data:idxs.map(function(i){return deptPerf[SK[i]]||0;}),backgroundColor:idxs.map(function(i){return SC[SK[i]];}),borderWidth:2}]},
     plugins:[centerText,pieLabel],
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},padding:8}}}}});
@@ -1319,7 +1319,7 @@ function renderPerfSection(rname){
   var stackEl = document.getElementById('c0-perf-stack');
   if(stackEl){
     var stackDepts = isAll ? PDEPTS : [curDept0];
-    perfStackChart = new Chart(stackEl.getContext('2d'),{type:'bar',
+    if(typeof Chart!=='undefined') perfStackChart = new Chart(stackEl.getContext('2d'),{type:'bar',
       data:{labels:stackDepts,datasets:SK.map(function(s){return {label:s,data:stackDepts.map(function(dp){return (d.byDept[dp]||{})[s]||0;}),backgroundColor:SC[s],borderRadius:2};})},
       plugins:[barLabel],
       options:{responsive:true,maintainAspectRatio:false,
