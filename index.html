@@ -1,829 +1,780 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>市场营销中台 · 人才看板 2026Q1</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新人GD项目述职看板</title>
 <style>
-:root{--red:#ff2442;--dark:#1a1a2e;--border:#e8e8e8;--gray:#888;--bg:#f5f5f7;--card:#fff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'PingFang SC',system-ui,sans-serif;background:var(--bg);color:#222;min-height:100vh}
-.header{background:var(--dark);color:#fff;padding:18px 24px}
-.header h1{font-size:18px;font-weight:700}
-.header .sub{font-size:12px;opacity:.6;margin-top:4px}
-.tab-bar{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 16px;overflow-x:auto}
-.tab-btn{border:none;background:none;padding:14px 18px;font-size:14px;cursor:pointer;color:var(--gray);border-bottom:2px solid transparent;white-space:nowrap;transition:all .18s}
-.tab-btn.active{color:var(--red);border-bottom-color:var(--red);font-weight:600}
-.panel{display:none;padding:20px 20px 40px}.panel.active{display:block}
-.section-title{font-size:15px;font-weight:700;color:var(--dark);margin:20px 0 12px;padding-left:10px;border-left:3px solid var(--red)}
-.kpi-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
-.kpi-card{background:var(--card);border-radius:12px;padding:16px 20px;flex:1;min-width:120px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.kpi-value{font-size:26px;font-weight:700;color:var(--red)}
-.kpi-label{font-size:12px;color:var(--gray);margin-top:4px}
-.chart-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-bottom:20px}
-.chart-card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.chart-card h3{font-size:13px;font-weight:600;color:#444;margin-bottom:12px}
-.cw{position:relative;height:210px}.cw-tall{position:relative;height:280px}
-.filter-bar{background:#fff;border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.filter-bar label{font-size:13px;color:var(--gray);font-weight:500;white-space:nowrap}
-.dept-btn{border:1.5px solid var(--border);background:#fff;border-radius:20px;padding:5px 13px;font-size:12px;cursor:pointer;transition:all .15s;color:#333}
-.dept-btn:hover{border-color:var(--red);color:var(--red)}
-.dept-btn.active{background:var(--red);color:#fff;border-color:var(--red);font-weight:600}
-.perf-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
-.perf-bar-label{font-size:11px;width:90px;text-align:right;color:#444;flex-shrink:0}
-.perf-bar-bg{flex:1;background:#f0f0f0;border-radius:4px;height:20px;overflow:hidden}
-.perf-bar-fill{height:100%;border-radius:4px;transition:width .4s;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
-.perf-bar-fill span{font-size:11px;color:#fff;font-weight:600;white-space:nowrap}
-table.dt{width:100%;border-collapse:collapse;font-size:13px}
-table.dt th{background:#f8f8f8;padding:8px 10px;text-align:left;font-weight:600;border-bottom:2px solid var(--border);white-space:nowrap}
-table.dt td{padding:8px 10px;border-bottom:1px solid #f0f0f0}
-table.dt tr:hover td{background:#fafafa}
-.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
-.bg{background:#dcfce7;color:#16a34a}.bb{background:#dbeafe;color:#2563eb}
-.by{background:#fef9c3;color:#b45309}.br{background:#fee2e2;color:#ef4444}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f5f6f8; min-height: 100vh; }
+
+  /* ─── 顶部工具栏 ─── */
+  .toolbar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .toolbar-title { font-size: 15px; font-weight: 600; color: #111827; }
+  .toolbar-actions { display: flex; gap: 8px; }
+  .btn {
+    padding: 5px 12px; border-radius: 6px; border: 1px solid #d1d5db;
+    background: #fff; font-size: 13px; cursor: pointer; color: #374151;
+    transition: all .15s;
+  }
+  .btn:hover { background: #f3f4f6; }
+  .btn-primary { background: #f97316; color: #fff; border-color: #f97316; }
+  .btn-primary:hover { background: #ea6c0a; }
+  .btn-danger { background: #fff; color: #dc2626; border-color: #dc2626; }
+  .btn-danger:hover { background: #fef2f2; }
+  .btn-green { background: #16a34a; color: #fff; border-color: #16a34a; }
+  .btn-green:hover { background: #15803d; }
+
+  /* ─── Tab 栏 ─── */
+  .tabs-bar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 4px;
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 10px 16px; font-size: 14px; cursor: pointer;
+    border-bottom: 2px solid transparent; color: #6b7280; white-space: nowrap;
+    user-select: none; transition: all .15s; position: relative;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tab.active { color: #f97316; border-bottom-color: #f97316; font-weight: 600; }
+  .tab:hover { color: #374151; }
+  .tab .del-tab {
+    font-size: 11px; color: #9ca3af; cursor: pointer;
+    width: 16px; height: 16px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; padding: 0;
+  }
+  .tab .del-tab:hover { background: #fee2e2; color: #dc2626; }
+  .tab-add {
+    padding: 10px 12px; font-size: 20px; cursor: pointer; color: #9ca3af; line-height: 1;
+  }
+  .tab-add:hover { color: #f97316; }
+
+  /* ─── 看板内容区 ─── */
+  .board { display: none; padding: 20px; }
+  .board.active { display: block; }
+
+  /* ─── 看板头部 ─── */
+  .board-header { background: #fff; border-radius: 10px; padding: 18px 20px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .board-title {
+    font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .board-title-icon { font-size: 18px; }
+  .board-judges { font-size: 14px; color: #6b7280; }
+  .board-judges span[contenteditable] { display: inline; }
+
+  [contenteditable] { outline: none; }
+  [contenteditable]:focus {
+    background: #fffbeb; border-radius: 4px;
+    box-shadow: 0 0 0 2px #fcd34d;
+  }
+  [contenteditable]:hover { background: #f9fafb; border-radius: 3px; }
+
+  /* ─── 表格区域 ─── */
+  .table-wrap { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden; }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 900px; }
+  thead tr { background: #f9fafb; }
+  th {
+    padding: 10px 10px; font-size: 12px; font-weight: 600; color: #374151;
+    border-bottom: 1px solid #e5e7eb; text-align: left; white-space: nowrap;
+    position: relative;
+  }
+  th.col-total { color: #dc2626; }
+  td {
+    padding: 8px 10px; font-size: 13px; color: #374151;
+    border-bottom: 1px solid #f3f4f6; vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafaf9; }
+  tr.adding td { background: #fefce8; }
+
+  .cell-name { font-weight: 700; font-size: 14px; }
+  .cell-sub { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+  .cell-doc a { color: #7c3aed; font-size: 12px; text-decoration: none; }
+  .cell-doc a:hover { text-decoration: underline; }
+
+  /* 评分颜色 */
+  .score { font-weight: 700; font-size: 14px; }
+  .score-3_5 { color: #f97316; }
+  .score-3_5plus { color: #16a34a; }
+  .score-3_75 { color: #16a34a; }
+  .score-4_0 { color: #2563eb; }
+  .score-total { font-size: 16px; }
+
+  .score-comment { font-size: 12px; color: #6b7280; margin-top: 2px; line-height: 1.4; }
+  .score-cell { min-width: 100px; }
+
+  /* 行操作 */
+  .row-actions { opacity: 0; transition: opacity .15s; display: flex; gap: 4px; }
+  tr:hover .row-actions { opacity: 1; }
+  .btn-icon {
+    background: none; border: none; cursor: pointer; padding: 2px 5px;
+    font-size: 12px; border-radius: 4px; color: #9ca3af;
+  }
+  .btn-icon:hover { background: #fee2e2; color: #dc2626; }
+
+  /* ─── 延期述职 ─── */
+  .delay-section {
+    background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+    padding: 12px 16px; margin-top: 16px; font-size: 13px; color: #92400e;
+  }
+  .delay-section .delay-label { font-weight: 600; margin-bottom: 4px; }
+
+  /* ─── 评委管理 ─── */
+  .judge-mgr { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+  .judge-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #f3f4f6; border-radius: 20px; padding: 2px 10px 2px 12px;
+    font-size: 13px; color: #374151;
+  }
+  .judge-tag .del-judge { background: none; border: none; cursor: pointer; color: #9ca3af; font-size: 14px; line-height: 1; }
+  .judge-tag .del-judge:hover { color: #dc2626; }
+  .judge-input {
+    border: 1px dashed #d1d5db; border-radius: 20px; padding: 2px 10px;
+    font-size: 13px; width: 80px; outline: none; color: #374151;
+  }
+  .judge-input:focus { border-color: #f97316; }
+
+  /* 看板底部按钮 */
+  .board-footer { padding: 12px 16px; display: flex; gap: 10px; align-items: center; border-top: 1px solid #f3f4f6; }
+
+  /* 模态框 */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4);
+    z-index: 200; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 12px; padding: 24px; width: 420px; max-width: 95vw;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  }
+  .modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+  .modal textarea {
+    width: 100%; height: 180px; border: 1px solid #e5e7eb; border-radius: 8px;
+    padding: 10px; font-size: 13px; font-family: monospace; resize: vertical; outline: none;
+  }
+  .modal textarea:focus { border-color: #f97316; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
+  .modal input[type=text] {
+    width: 100%; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px;
+    font-size: 14px; outline: none; margin-bottom: 10px;
+  }
+  .modal input[type=text]:focus { border-color: #f97316; }
+
+  /* 提示 */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; background: #111827; color: #fff;
+    padding: 10px 18px; border-radius: 8px; font-size: 13px; z-index: 300;
+    transform: translateY(80px); opacity: 0; transition: all .3s;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 600px) {
+    .toolbar { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>🏢 市场营销中台 · 人才看板</h1>
-  <div class="sub">2026Q1 · 数据截至 2026-04-02 · 奎妮 BP</div>
-</div>
-<div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab(0)">① 人才现状</button>
-  <button class="tab-btn" onclick="showTab(1)">② 新人 Landing</button>
-  <button class="tab-btn" onclick="showTab(2)">③ 招聘汰换</button>
-  <button class="tab-btn" onclick="showTab(3)">④ IC看见计划</button>
-  <button class="tab-btn" onclick="showTab(4)">⑤ 行动建议</button>
-</div>
 
-
-<div class="panel active" id="panel-0">
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="kpi-value">182</div><div class="kpi-label">在职总人数</div></div>
-    <div class="kpi-card"><div class="kpi-value">74.2%</div><div class="kpi-label">女性占比</div></div>
-    <div class="kpi-card"><div class="kpi-value">34.1%</div><div class="kpi-label">硕士及以上</div></div>
-    <div class="kpi-card"><div class="kpi-value">47.3%</div><div class="kpi-label">突破期占比</div></div>
+<!-- 工具栏 -->
+<div class="toolbar">
+  <div class="toolbar-title">📋 新人GD项目述职看板</div>
+  <div class="toolbar-actions">
+    <button class="btn" onclick="importData()">📥 导入</button>
+    <button class="btn" onclick="exportData()">📤 导出</button>
+    <button class="btn btn-danger" onclick="resetData()">🗑 清空数据</button>
   </div>
-  <div class="section-title">🏢 部门筛选</div>
-  <div class="filter-bar">
-    <label>小组：</label>
-    <button class="dept-btn active" onclick="setDept0(this,'全部')">全部</button>
-    <button class="dept-btn" onclick="setDept0(this,'业务培训')">业务培训</button>
-    <button class="dept-btn" onclick="setDept0(this,'互动营销')">互动营销</button>
-    <button class="dept-btn" onclick="setDept0(this,'内容运营')">内容运营</button>
-    <button class="dept-btn" onclick="setDept0(this,'品牌及商家赋能')">品牌及商家赋能</button>
-    <button class="dept-btn" onclick="setDept0(this,'商业市场部')">商业市场部</button>
-    <button class="dept-btn" onclick="setDept0(this,'娱乐营销')">娱乐营销</button>
-    <button class="dept-btn" onclick="setDept0(this,'媒介与项目管理')">媒介与项目管理</button>
-    <button class="dept-btn" onclick="setDept0(this,'平台大事件')">平台大事件</button>
-    <button class="dept-btn" onclick="setDept0(this,'用户市场组')">用户市场组</button>
-    <button class="dept-btn" onclick="setDept0(this,'节点营销')">节点营销</button>
-    <button class="dept-btn" onclick="setDept0(this,'行业营销一组')">行业营销一组</button>
-    <button class="dept-btn" onclick="setDept0(this,'行业营销三组')">行业营销三组</button>
-    <button class="dept-btn" onclick="setDept0(this,'行业营销二组')">行业营销二组</button>
-    <button class="dept-btn" onclick="setDept0(this,'行业营销四组')">行业营销四组</button>
-  </div>
-  <div class="chart-grid">
-    <div class="chart-card"><h3>人才标签分布</h3><div class="cw"><canvas id="c0-tag"></canvas></div></div>
-    <div class="chart-card"><h3>各小组人数</h3><div class="cw"><canvas id="c0-dept"></canvas></div></div>
-    <div class="chart-card"><h3>司龄分布</h3><div class="cw"><canvas id="c0-tenure"></canvas></div></div>
-  </div>
-
-  <div class="section-title">🎯 绩效分布</div>
-  <div class="filter-bar" id="perf-round-bar">
-    <label>绩效轮次：</label>
-    <button class="dept-btn active" onclick="switchPerfRound(this,'2025年度绩效')">2025年度绩效</button>
-    <button class="dept-btn" onclick="switchPerfRound(this,'2025H1绩效')">2025H1绩效</button>
-    <button class="dept-btn" onclick="switchPerfRound(this,'2024年度绩效')">2024年度绩效</button>
-    <button class="dept-btn" onclick="switchPerfRound(this,'2024H1绩效')">2024H1绩效</button>
-    <button class="dept-btn" onclick="switchPerfRound(this,'2023年度绩效')">2023年度绩效</button>
-    <button class="dept-btn" onclick="switchPerfRound(this,'2023H1绩效')">2023H1绩效</button>
-    <button class="dept-btn" onclick="switchPerfRound(this,'2022年度绩效')">2022年度绩效</button>
-  </div>
-  <div id="perf-coverage" style="font-size:12px;color:#888;margin-bottom:10px;padding-left:4px"></div>
-  <div class="chart-grid">
-    <div class="chart-card"><h3>整体绩效分布（饼图）</h3><div class="cw"><canvas id="c0-perf-pie"></canvas></div></div>
-    <div class="chart-card">
-      <h3>各档次人数 & 占比</h3>
-      <div style="padding-top:4px;min-height:160px" id="perf-bars"></div>
-    </div>
-  </div>
-  <div class="chart-card" style="margin-bottom:20px">
-    <h3>各小组绩效分布（堆叠柱状图）</h3>
-    <div style="position:relative;height:300px"><canvas id="c0-perf-stack"></canvas></div>
-  </div>
-
 </div>
 
+<!-- Tab 栏 -->
+<div class="tabs-bar" id="tabsBar">
+  <!-- 动态生成 -->
+  <span class="tab-add" onclick="addPeriod()" title="新增一期">＋</span>
+</div>
 
-<div class="panel" id="panel-1">
-  <div class="section-title">新人 Landing 概览</div>
-  <div class="filter-bar">
-    <label>小组：</label>
-    <button class="dept-btn active" onclick="setDept1(this,'全部')">全部</button>
-    <button class="dept-btn" onclick="setDept1(this,'媒介与项目管理')">媒介与项目管理</button>
-    <button class="dept-btn" onclick="setDept1(this,'商业市场部')">商业市场部</button>
-    <button class="dept-btn" onclick="setDept1(this,'互动营销')">互动营销</button>
-    <button class="dept-btn" onclick="setDept1(this,'行业营销一组')">行业营销一组</button>
-    <button class="dept-btn" onclick="setDept1(this,'用户市场组')">用户市场组</button>
-    <button class="dept-btn" onclick="setDept1(this,'行业营销三组')">行业营销三组</button>
-    <button class="dept-btn" onclick="setDept1(this,'行业营销四组')">行业营销四组</button>
-    <button class="dept-btn" onclick="setDept1(this,'品牌及商家赋能')">品牌及商家赋能</button>
-    <button class="dept-btn" onclick="setDept1(this,'行业营销二组')">行业营销二组</button>
-    <button class="dept-btn" onclick="setDept1(this,'平台大事件')">平台大事件</button>
-    <button class="dept-btn" onclick="setDept1(this,'娱乐营销')">娱乐营销</button>
-    <button class="dept-btn" onclick="setDept1(this,'节点营销')">节点营销</button>
-    <button class="dept-btn" onclick="setDept1(this,'内容运营')">内容运营</button>
-    <button class="dept-btn" onclick="setDept1(this,'业务培训')">业务培训</button>
-  </div>
-  <div class="kpi-row" id="p1-kpi">
-    <div class="kpi-card"><div class="kpi-value" id="p1-total">182</div><div class="kpi-label">在职总人数</div></div>
-    <div class="kpi-card"><div class="kpi-value" id="p1-le1y">64</div><div class="kpi-label">入职≤1年人数</div></div>
-    <div class="kpi-card"><div class="kpi-value" id="p1-newpct">35%</div><div class="kpi-label">新人占比</div></div>
-    <div class="kpi-card"><div class="kpi-value" id="p1-trial">32</div><div class="kpi-label">试用期中人数</div></div>
-    <div class="kpi-card"><div class="kpi-value" id="p1-trialpct">17.6%</div><div class="kpi-label">试用期占比</div></div>
-  </div>
+<!-- 看板内容 -->
+<div id="boards"></div>
 
+<!-- 延期述职悬浮底部（跟随看板） -->
 
-  <div class="section-title">📋 新人名单</div>
-  <div class="chart-card" style="padding:12px 16px">
-    <div style="font-size:12px;color:#888;margin-bottom:10px">数据范围：2025年9月及以后入职的在职员工 · 共 <span id="trial-count">38</span> 人&nbsp;&nbsp;|&nbsp;&nbsp;试用期中 <span id="trial-inprogress">31</span> 人 · 已转正 <span id="trial-passed">6</span> 人 · 待离职 <span id="trial-leaving">1</span> 人</div>
-    <div style="overflow-x:auto">
-    <table class="dt" id="trial-table" style="min-width:800px">
-      <tr><th>薯名</th><th>状态</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>
-    </table>
-    </div>
-  </div>
-
-  <div class="section-title">🎓 新人 GD 项目</div>
-  <div class="chart-card" style="margin-bottom:16px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <h3 style="margin-bottom:0">项目背景</h3>
-      <button id="gd-edit-btn" onclick="toggleGdEdit()" style="border:1.5px solid #e8e8e8;background:#fff;border-radius:20px;padding:4px 14px;font-size:12px;cursor:pointer;color:#666;transition:all .15s">✏️ 编辑</button>
-    </div>
-    <div id="gd-bg-view" style="font-size:13px;line-height:1.9;color:#444;padding:4px 0">
-      <p>自 2025年9月起，团队共入职新人 <strong>35人</strong>（2名校招 + 33名社招），其中截至2026年3月13日仍有 <strong>32人处于试用期</strong>。</p>
-      <p style="margin-top:8px">为帮助新人更好地融入团队、展示试用期成果，特设立 <strong>新人 GD（Graduate Defense）述职项目</strong>：每人10分钟陈述 + 10分钟 Q&amp;A，评委由各 L1 担任。述职内容涵盖：个人背景介绍、试用期独立完成的工作成果、对小红书发展的贡献，以及对未来的展望。</p>
-      <p style="margin-top:8px">述职评分维度参考转正标准，综合评委打分给出最终结果。</p>
-    </div>
-    <div id="gd-bg-editor" style="display:none">
-      <div id="gd-toolbar" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;padding:8px;background:#f8f8f8;border-radius:8px">
-        <button onclick="execCmd('bold')" title="粗体" style="width:30px;height:30px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;font-weight:700">B</button>
-        <button onclick="execCmd('italic')" title="斜体" style="width:30px;height:30px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;font-style:italic">I</button>
-        <button onclick="execCmd('underline')" title="下划线" style="width:30px;height:30px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;text-decoration:underline">U</button>
-        <div style="width:1px;background:#ddd;margin:0 2px"></div>
-        <button onclick="execCmd('insertUnorderedList')" title="无序列表" style="width:30px;height:30px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer">≡</button>
-        <button onclick="execCmd('insertOrderedList')" title="有序列表" style="width:30px;height:30px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer">1.</button>
-        <div style="width:1px;background:#ddd;margin:0 2px"></div>
-        <select onchange="execCmd('foreColor',this.value);this.value=''" style="height:30px;border:1px solid #ddd;border-radius:6px;font-size:12px;padding:0 4px">
-          <option value="">🎨 颜色</option>
-          <option value="#ff2442">🔴 红</option>
-          <option value="#2563eb">🔵 蓝</option>
-          <option value="#16a34a">🟢 绿</option>
-          <option value="#f59e0b">🟡 橙</option>
-          <option value="#888">⚫ 灰</option>
-        </select>
-        <div style="flex:1"></div>
-        <button onclick="saveGdBg()" style="height:30px;padding:0 14px;background:#ff2442;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">✅ 保存</button>
-        <button onclick="cancelGdEdit()" style="height:30px;padding:0 12px;background:#f5f5f5;color:#666;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-size:12px">取消</button>
-      </div>
-      <div id="gd-bg-editable" contenteditable="true"
-        style="min-height:120px;border:1.5px solid #ff2442;border-radius:8px;padding:12px 14px;font-size:13px;line-height:1.9;color:#444;outline:none;background:#fff">
-      </div>
-    </div>
-  </div>
-
-  <div class="chart-card" style="margin-bottom:16px">
-    <h3>📋 第一期述职 · 2026年3月24日</h3>
-    <div style="font-size:12px;color:#888;margin-bottom:12px">评委：又思 · 金槌 · 尤弥 · 未希 · 龙龙 · 允浩</div>
-    <div style="overflow-x:auto">
-    <table class="dt" style="min-width:900px">
-      <tr>
-        <th>薯名</th><th>小组</th><th>L1</th><th>入职日期</th><th>述职文档</th>
-        <th>又思</th><th>金槌</th><th>尤弥</th><th>未希</th><th>龙龙</th><th>允浩</th><th style="background:#fff7ed;color:#c2410c">综合</th>
-      </tr>
-      <tr>
-        <td><strong>井野(魏欣)</strong><div style="font-size:11px;color:#888">行业营销一组 · 上海</div></td>
-        <td>行业营销一组</td><td>尤弥</td><td>2025/9/10</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/64b30735551965987dcf153238813ebc" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">潜力有限</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">有点junior，说的很表面</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">对客户理解可再提高</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">行业环境理解需加强</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">打开了日化IP突破口，QA思考不足</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">ownership足，策略规划可加强</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.5</span></td>
-      </tr>
-      <tr>
-        <td><strong>大鱼(张瑜)</strong><div style="font-size:11px;color:#888">节点营销 · 北京</div></td>
-        <td>节点营销</td><td>未希</td><td>2025/9/10</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/af104dca7937e30a15ea47e57161eb1d" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">—</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">知乎，聪明，可更靠近行业</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">沟通清晰，创意好，单品牌价值交付需提升</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">IP价值与创意达标，行业痛点需深入</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">策略/招商/交付把控强，沟通灵活</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">能量高有干劲，分享过于细节</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.5+</span></td>
-      </tr>
-      <tr>
-        <td><strong>斯比(张琦)</strong><div style="font-size:11px;color:#888">商业市场部 · 上海</div></td>
-        <td>商业市场部</td><td>龙龙</td><td>2025/9/10</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/e740dead11c48b1349c78b58fef1b50e" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">要更贴近业务，思考更sharp</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">有观点和判断，基本面OK</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">有点抽象，市场心智差异不清晰</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">精细化打造OK，优先级判断较少</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">能识别行业共性问题，给出方案</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">有系统化思考</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.5+</span></td>
-      </tr>
-      <tr>
-        <td><strong>雪梨(陈姝羽)</strong><div style="font-size:11px;color:#888">行业营销一组 · 上海</div></td>
-        <td>行业营销一组</td><td>尤弥</td><td>2025/9/22</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/d5e542b42a9826aa3cb0438d662a363f" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">—</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">like校招妹妹junior，PM中有潜力</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">成事动因足，聪明有想法，需培养</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">系统化梳理好，沟通界面清晰</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">执行交付为主，保有工作热情</div></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">相较年龄和年限，表现超出预期</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.5+</span></td>
-      </tr>
-      <tr>
-        <td><strong>弯弯(唐婉)</strong><div style="font-size:11px;color:#888">商业市场部 · 北京</div></td>
-        <td>商业市场部</td><td>允浩</td><td>2025/9/29</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/7800b8e89b7f43c3fc5be674f9ee8ccd" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">—</div></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">挺solid，可给更大战场</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">成熟度高，对市场内容有热情</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">扎根业务，市场认知清晰，细节有打磨</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">商业化价值探索有个人深度思考</div></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">有ownership，结果有追求，价值交付不错</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.75</span></td>
-      </tr>
-      <tr>
-        <td><strong>柏瑞(许冰)</strong><div style="font-size:11px;color:#888">行业营销一组 · 上海</div></td>
-        <td>行业营销一组</td><td>尤弥</td><td>2025/10/22</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/d95e6d4c57344be45e81faf2abb5061e" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">可尝试take lead横向专项</div></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">PM里很好的，有AI sense，做看板</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">举一反三，自动化表格缩短工作流</div></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">稀缺人才选型，流程提效能力强</div></td>
-        <td><span style="color:#16a34a;font-weight:600">3.75</span><div style="font-size:10px;color:#888;margin-top:2px">体系化沉淀，对组织效率提升大</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">标准PM能力，执行力满，能效高</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.75</span></td>
-      </tr>
-      <tr>
-        <td><strong>曼曼(刘佳)</strong><div style="font-size:11px;color:#888">行业营销二组 · 上海</div></td>
-        <td>行业营销二组</td><td>未希</td><td>2025/10/27</td>
-        <td><a href="https://docs.xiaohongshu.com/doc/274ec169a4f05e363ae7457cb96b0ed9" target="_blank" style="color:#ff2442;font-size:12px">📄 查看文档</a></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">—</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">—</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">偏个案视角</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">懂客户，敢于寻找解法，积极推动</div></td>
-        <td><span style="color:#2563eb;font-weight:600">3.5+</span><div style="font-size:10px;color:#888;margin-top:2px">专耕难搞客户，能利用资源深层推进</div></td>
-        <td><span style="color:#f59e0b;font-weight:600">3.5</span><div style="font-size:10px;color:#888;margin-top:2px">懂客户，需在优势外再突破</div></td>
-        <td style="background:#fff7ed"><span style="color:#c2410c;font-weight:700;font-size:15px">3.5+</span></td>
-      </tr>
-    </table>
-    </div>
-    <div style="margin-top:12px;font-size:12px;color:#888;border-top:1px solid #f0f0f0;padding-top:10px">
-      ⚠️ 延期述职：<del>小枝(王笑妍)</del>（请假延期）&nbsp;&nbsp;<del>娜丁(丁增德吉)</del>（请假延期）&nbsp;&nbsp;<del>梁爽(梁爽)</del>（对客交付延期）
+<!-- 模态框：导入JSON -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal">
+    <h3>📥 导入数据（JSON）</h3>
+    <textarea id="importText" placeholder="粘贴 JSON 数据..."></textarea>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('importModal')">取消</button>
+      <button class="btn btn-primary" onclick="doImport()">导入</button>
     </div>
   </div>
 </div>
 
-
-<div class="panel" id="panel-2">
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="kpi-value">155</div><div class="kpi-label">历史离职总人数</div></div>
-    <div class="kpi-card"><div class="kpi-value">96</div><div class="kpi-label">主动离职</div></div>
-    <div class="kpi-card"><div class="kpi-value">59</div><div class="kpi-label">被动离职</div></div>
-    <div class="kpi-card"><div class="kpi-value">38%</div><div class="kpi-label">被动离职占比</div></div>
-  </div>
-  <div class="filter-bar">
-    <label>小组：</label>
-    <button class="dept-btn active" onclick="setDept2(this,'全部')">全部</button>
-    <button class="dept-btn" onclick="setDept2(this,'业务培训')">业务培训</button>
-    <button class="dept-btn" onclick="setDept2(this,'互动营销')">互动营销</button>
-    <button class="dept-btn" onclick="setDept2(this,'内容运营')">内容运营</button>
-    <button class="dept-btn" onclick="setDept2(this,'品牌及商家赋能')">品牌及商家赋能</button>
-    <button class="dept-btn" onclick="setDept2(this,'商业市场部')">商业市场部</button>
-    <button class="dept-btn" onclick="setDept2(this,'娱乐营销')">娱乐营销</button>
-    <button class="dept-btn" onclick="setDept2(this,'媒介与项目管理')">媒介与项目管理</button>
-    <button class="dept-btn" onclick="setDept2(this,'平台大事件')">平台大事件</button>
-    <button class="dept-btn" onclick="setDept2(this,'用户市场组')">用户市场组</button>
-    <button class="dept-btn" onclick="setDept2(this,'节点营销')">节点营销</button>
-    <button class="dept-btn" onclick="setDept2(this,'行业营销一组')">行业营销一组</button>
-    <button class="dept-btn" onclick="setDept2(this,'行业营销三组')">行业营销三组</button>
-    <button class="dept-btn" onclick="setDept2(this,'行业营销二组')">行业营销二组</button>
-    <button class="dept-btn" onclick="setDept2(this,'行业营销四组')">行业营销四组</button>
-  </div>
-  <div class="chart-grid">
-    <div class="chart-card"><h3>离职类型（主动 vs 被动）</h3><div class="cw"><canvas id="c2-type"></canvas></div></div>
-    <div class="chart-card"><h3>离职原因 Top6</h3><div class="cw"><canvas id="c2-reason"></canvas></div></div>
-  </div>
-  <div class="section-title">📋 Y26 招聘汰换计划</div>
-  <div class="chart-card">
-    <table class="dt">
-      <tr><th>小组</th><th>Y25末人数</th><th>预计离职</th><th>汰换目标</th><th>招聘需求</th><th>重点方向</th></tr>
-      <tr><td>媒介与项目管理</td><td>25</td><td>3</td><td>1</td><td>4</td><td>媒介运营加强，项目管理规范化</td></tr>
-      <tr><td>商业市场部</td><td>23</td><td>3</td><td>1</td><td>4</td><td>市场策略，商业化落地</td></tr>
-      <tr><td>互动营销</td><td>21</td><td>2</td><td>1</td><td>3</td><td>互动创意，效果优化</td></tr>
-      <tr><td>行业营销一组</td><td>17</td><td>2</td><td>1</td><td>3</td><td>行业深耕，客户拓展</td></tr>
-      <tr><td>用户市场组</td><td>12</td><td>2</td><td>0</td><td>2</td><td>用户洞察，增长策略</td></tr>
-      <tr><td>行业营销三组</td><td>12</td><td>2</td><td>0</td><td>2</td><td>行业营销深化</td></tr>
-      <tr><td>行业营销四组</td><td>11</td><td style="color:#ef4444;font-weight:600">3 ⚠️</td><td>1</td><td>4</td><td>高离职风险，需稳定</td></tr>
-      <tr><td>品牌及商家赋能</td><td>11</td><td>1</td><td>0</td><td>1</td><td>品牌建设，商家赋能</td></tr>
-      <tr><td>行业营销二组</td><td>10</td><td>1</td><td>0</td><td>1</td><td>行业营销深化</td></tr>
-      <tr><td>平台大事件</td><td>10</td><td>1</td><td>0</td><td>1</td><td>大事件策划执行</td></tr>
-      <tr><td>娱乐营销</td><td>9</td><td style="color:#ef4444;font-weight:600">2 ⚠️</td><td>1</td><td>3</td><td>娱乐内容，节目合作</td></tr>
-      <tr><td>节点营销</td><td>8</td><td>1</td><td>0</td><td>1</td><td>节点活动策划</td></tr>
-      <tr><td>内容运营</td><td>7</td><td>1</td><td>0</td><td>1</td><td>内容生态运营</td></tr>
-      <tr><td>业务培训</td><td>5</td><td>0</td><td>0</td><td>0</td><td>能力建设体系</td></tr>
-    </table>
+<!-- 模态框：编辑文档链接 -->
+<div class="modal-overlay" id="docModal">
+  <div class="modal">
+    <h3>📎 编辑文档链接</h3>
+    <input type="text" id="docUrlInput" placeholder="https://docs.xiaohongshu.com/...">
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('docModal')">取消</button>
+      <button class="btn btn-primary" onclick="saveDocUrl()">保存</button>
+    </div>
   </div>
 </div>
 
-
-<div class="panel" id="panel-3">
-  <div class="section-title">IC 看见计划概况</div>
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="kpi-value">172</div><div class="kpi-label">IC总人数</div></div>
-    <div class="kpi-card"><div class="kpi-value">10</div><div class="kpi-label">管理层人数</div></div>
-    <div class="kpi-card"><div class="kpi-value">95%</div><div class="kpi-label">IC占比</div></div>
-    <div class="kpi-card"><div class="kpi-value">84</div><div class="kpi-label">突破期IC（重点培养）</div></div>
-  </div>
-  <div class="chart-grid">
-    <div class="chart-card"><h3>层级分布</h3><div class="cw"><canvas id="c3-level"></canvas></div></div>
-    <div class="chart-card"><h3>IC vs Leader 人才标签对比</h3><div class="cw"><canvas id="c3-tag"></canvas></div></div>
-  </div>
-  <div class="section-title">IC 5.0 计划</div>
-  <div class="chart-card">
-    <table class="dt">
-      <tr><th>维度</th><th>内容</th></tr>
-      <tr><td>目标</td><td>识别并激活高潜 IC，建立 IC 晋升通道，减少关键 IC 流失</td></tr>
-      <tr><td>重点人群</td><td>突破期 IC（84 人）+ 成熟期 IC（41 人）</td></tr>
-      <tr><td>关键举措</td><td>Q1完成全量IC面谈 → Q2确认晋升Pitch List → Q3集中答辩 → Q4落地</td></tr>
-      <tr><td>风险提示</td><td>绩效 3.5- 人员需启动 PIP 跟进；关注高离职风险小组的 IC 留存</td></tr>
-    </table>
+<!-- 模态框：新增期 -->
+<div class="modal-overlay" id="addPeriodModal">
+  <div class="modal">
+    <h3>➕ 新增述职期</h3>
+    <input type="text" id="periodNameInput" placeholder="例：第二期述职 · 2026年6月15日">
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal('addPeriodModal')">取消</button>
+      <button class="btn btn-primary" onclick="confirmAddPeriod()">添加</button>
+    </div>
   </div>
 </div>
 
-
-<div class="panel" id="panel-4">
-  <div class="section-title">行动建议汇总</div>
-  <div class="chart-card">
-    <table class="dt">
-      <tr><th>优先级</th><th>领域</th><th>建议</th><th>责任人</th><th>节点</th></tr>
-      <tr><td><span class="badge br">P0</span></td><td>绩效 Cali</td><td>完成 Q1 绩效校准，3.5- 人员启动 PIP</td><td>奎妮</td><td>4月底</td></tr>
-      <tr><td><span class="badge br">P0</span></td><td>留存</td><td>行业营销四组、娱乐营销高离职风险，一对一深谈</td><td>奎妮</td><td>本月</td></tr>
-      <tr><td><span class="badge by">P1</span></td><td>招聘</td><td>FP&amp;A 缺口补充；各组补位招聘</td><td>奎妮</td><td>Q2</td></tr>
-      <tr><td><span class="badge by">P1</span></td><td>IC 看见</td><td>启动 IC 5.0，面谈 172 名 IC</td><td>奎妮+Leaders</td><td>Q2</td></tr>
-      <tr><td><span class="badge by">P1</span></td><td>校招安置</td><td>财分校招生安置，确认导师 + 轮岗计划</td><td>奎妮</td><td>Q2</td></tr>
-      <tr><td><span class="badge bg">P2</span></td><td>人才结构</td><td>年轻人才 5%→10%，投资期 17%→30%</td><td>奎妮</td><td>全年</td></tr>
-      <tr><td><span class="badge bb">P3</span></td><td>组织健康</td><td>双月复盘，持续追踪司龄/标签/绩效分布</td><td>奎妮</td><td>双月</td></tr>
-    </table>
-  </div>
-</div>
-
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════
-// 数据
-// ═══════════════════════════════════════════
-var curDept0 = '全部';
-var curPerfRound = '2025年度绩效';
+// ══════════════════════════════════════════
+//  数据模型
+// ══════════════════════════════════════════
+const STORAGE_KEY = 'gd_review_data_v2';
 
-var DEPTS = ["业务培训","互动营销","内容运营","品牌及商家赋能","商业市场部","娱乐营销","媒介与项目管理","平台大事件","用户市场组","节点营销","行业营销一组","行业营销三组","行业营销二组","行业营销四组"];
-var DCOUNTS = [5,21,7,11,23,9,25,10,12,8,17,12,10,11];
-var TAG_L = ["突破期","成熟期","投资期","年轻人才"];
-var TAG_V = [86,49,31,16];
-var TAG_C = {'突破期':'#ff2442','成熟期':'#2563eb','投资期':'#16a34a','年轻人才':'#f59e0b'};
-var TEN_L = ["<1年","1-2年","2-3年","3-5年","5年+"];
-var TEN_V = [64,28,52,34,4];
-var LFT_L = ["被动离职","主动离职"];
-var LFT_V = [59,96];
-var RSN_L = ["个人发展","汰换","个人家庭","严重违纪","工作内容","组织及业务调整"];
-var RSN_V = [85,53,7,5,3,1];
-var LEVEL = {"L1":9,"IC":172,"L2":1};
-var IC_TAG = {"突破期":84,"成熟期":41,"投资期":31,"年轻人才":16};
-var LDR_TAG = {"突破期":2,"成熟期":8,"投资期":0,"年轻人才":0};
+function defaultData() {
+  return {
+    periods: [
+      {
+        id: 'p1',
+        title: '第一期述职',
+        date: '2026年3月24日',
+        judges: ['又思','金槌','尤弥','未希','龙龙','允浩'],
+        rows: [
+          {
+            id: 'r1', name: '井野(魏欣)', group: '行业营销一组', city: '上海', l1: '尤弥',
+            joinDate: '2025/9/10', docUrl: '#',
+            scores: {
+              '又思': { score: '3.5', comment: '潜力有限' },
+              '金槌': { score: '3.5', comment: '有点junior，说的很表面' },
+              '尤弥': { score: '3.5', comment: '对客户理解可再提高' },
+              '未希': { score: '3.5', comment: '行业环境理解需加强' },
+              '龙龙': { score: '3.5', comment: '打开了日化IP突破口，QA思考不足' },
+              '允浩': { score: '3.5', comment: 'ownership足，策略规划可加强' },
+            },
+            total: '3.5'
+          },
+          {
+            id: 'r2', name: '大鱼(张瑜)', group: '节点营销', city: '北京', l1: '未希',
+            joinDate: '2025/9/10', docUrl: '#',
+            scores: {
+              '又思': { score: '3.5+', comment: '' },
+              '金槌': { score: '3.5+', comment: '知乎，聪明，可更靠近行业' },
+              '尤弥': { score: '3.5+', comment: '沟通清晰，创意好，单品牌价值交付需提升' },
+              '未希': { score: '3.5+', comment: 'IP价值与创意达标，行业痛点需深入' },
+              '龙龙': { score: '3.5+', comment: '策略/招商/交付把控强，沟通灵活' },
+              '允浩': { score: '3.5+', comment: '能量高有干劲，分享过于细节' },
+            },
+            total: '3.5+'
+          },
+          {
+            id: 'r3', name: '斯比(张琦)', group: '商业市场部', city: '上海', l1: '龙龙',
+            joinDate: '2025/9/10', docUrl: '#',
+            scores: {
+              '又思': { score: '3.5+', comment: '' },
+              '金槌': { score: '3.5', comment: '要更贴近业务，思考更sharp' },
+              '尤弥': { score: '3.5+', comment: '有观点和判断，基本面OK' },
+              '未希': { score: '3.5', comment: '有点抽象，市场心智差异不清晰' },
+              '龙龙': { score: '3.5', comment: '精细化打造OK，优先级判断较少' },
+              '允浩': { score: '3.5+', comment: '能识别行业共性问题，给出方案' },
+            },
+            total: '3.5+'
+          },
+          {
+            id: 'r4', name: '雪梨(陈姝羽)', group: '行业营销一组', city: '上海', l1: '尤弥',
+            joinDate: '2025/9/22', docUrl: '#',
+            scores: {
+              '又思': { score: '3.5+', comment: '' },
+              '金槌': { score: '3.5+', comment: 'like校招妹妹junior，PM中有潜力' },
+              '尤弥': { score: '3.5', comment: '成事动因足，聪明有想法，需培养' },
+              '未希': { score: '3.5+', comment: '系统化梳理好，沟通界面清晰' },
+              '龙龙': { score: '3.5', comment: '执行交付为主，保有工作热情' },
+              '允浩': { score: '3.75', comment: '相较年龄和年限，表现超出预期' },
+            },
+            total: '3.5+'
+          },
+          {
+            id: 'r5', name: '弯弯(唐婉)', group: '商业市场部', city: '北京', l1: '允浩',
+            joinDate: '2025/9/29', docUrl: '#',
+            scores: {
+              '又思': { score: '3.75', comment: '' },
+              '金槌': { score: '3.75', comment: '挺solid，可给更大战场' },
+              '尤弥': { score: '3.75', comment: '成熟度高，对市场内容有热情' },
+              '未希': { score: '3.5+', comment: '扎根业务，市场认知清晰，细节有打磨' },
+              '龙龙': { score: '3.5+', comment: '商业化价值探索有个人深度思考' },
+              '允浩': { score: '3.75', comment: '有ownership，结果有追求，价值交付不错' },
+            },
+            total: '3.75'
+          },
+          {
+            id: 'r6', name: '柏瑞(许冰)', group: '行业营销一组', city: '上海', l1: '尤弥',
+            joinDate: '2025/10/22', docUrl: '#',
+            scores: {
+              '又思': { score: '3.5+', comment: '' },
+              '金槌': { score: '3.75', comment: 'PM里很好的，有AI sense，做看板' },
+              '尤弥': { score: '3.5+', comment: '举一反三，自动化表格缩短工作流' },
+              '未希': { score: '3.75', comment: '稀缺人才选型，流程提效能力强' },
+              '龙龙': { score: '3.75', comment: '体系化沉淀，对组织效率提升大' },
+              '允浩': { score: '3.5+', comment: '标杆PM能力，执行力强，能效高' },
+            },
+            total: '3.75'
+          },
+          {
+            id: 'r7', name: '曼曼(刘佳)', group: '行业营销二组', city: '上海', l1: '未希',
+            joinDate: '2025/10/27', docUrl: '#',
+            scores: {
+              '又思': { score: '3.5+', comment: '' },
+              '金槌': { score: '3.5+', comment: '' },
+              '尤弥': { score: '3.5', comment: '偏个案视角' },
+              '未希': { score: '3.5+', comment: '懂客户，敢于寻找解法，积极推进' },
+              '龙龙': { score: '3.5+', comment: '专耐难搞客户，能利用资源深层推进' },
+              '允浩': { score: '3.5', comment: '懂客户，需在优势外再突破' },
+            },
+            total: '3.5+'
+          }
+        ],
+        delays: '小枝(王笑妍)（请假延期） 娜于(于增德吉)（请假延期） 梁爽(梁爽)（对客交付延期）'
+      }
+    ],
+    activePeriodId: 'p1'
+  };
+}
 
-// 各小组人才标签 [突破期,成熟期,投资期,年轻人才]
-var TAG_BY_DEPT = {
-  "业务培训":[1,2,1,1],"互动营销":[10,5,3,3],"内容运营":[4,2,0,1],
-  "品牌及商家赋能":[5,4,2,0],"商业市场部":[10,7,4,2],"娱乐营销":[5,2,1,1],
-  "媒介与项目管理":[13,7,4,1],"平台大事件":[5,3,2,0],"用户市场组":[7,4,0,1],
-  "节点营销":[4,2,1,1],"行业营销一组":[8,4,4,1],"行业营销三组":[6,3,2,1],
-  "行业营销二组":[4,2,3,1],"行业营销四组":[4,2,4,1]
-};
-// 各小组司龄 [<1年,1-2年,2-3年,3-5年,5年+]
-var TEN_BY_DEPT = {
-  "业务培训":[2,1,1,1,0],"互动营销":[7,4,6,4,0],"内容运营":[2,1,2,2,0],
-  "品牌及商家赋能":[4,2,3,2,0],"商业市场部":[8,5,6,4,0],"娱乐营销":[3,2,2,2,0],
-  "媒介与项目管理":[10,4,7,4,0],"平台大事件":[4,2,2,2,0],"用户市场组":[5,2,3,2,0],
-  "节点营销":[3,1,2,2,0],"行业营销一组":[6,2,5,4,0],"行业营销三组":[4,1,4,3,0],
-  "行业营销二组":[3,1,4,2,0],"行业营销四组":[3,2,5,0,1]
-};
+// ══════════════════════════════════════════
+//  存储
+// ══════════════════════════════════════════
+let data = {};
+let currentDocTarget = null; // { periodId, rowId }
 
-const PERF_ALL = {"2025年度绩效": {"overall": {"4": 0, "3.75": 45, "3.5+": 55, "3.5": 59, "3.5-": 3, "3.25": 0}, "pct": {"4": 0.0, "3.75": 27.8, "3.5+": 34.0, "3.5": 36.4, "3.5-": 1.9, "3.25": 0.0}, "total": 162, "byDept": {"业务培训": {"4": 0, "3.75": 0, "3.5+": 1, "3.5": 4, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 7, "3.5+": 4, "3.5": 9, "3.5-": 0, "3.25": 0}, "内容运营": {"4": 0, "3.75": 1, "3.5+": 4, "3.5": 2, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 4, "3.5+": 3, "3.5": 2, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 6, "3.5+": 8, "3.5": 4, "3.5-": 0, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 3, "3.5+": 3, "3.5": 2, "3.5-": 1, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 4, "3.5+": 7, "3.5": 11, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 3, "3.5+": 3, "3.5": 3, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 0, "3.75": 1, "3.5+": 6, "3.5": 2, "3.5-": 1, "3.25": 0}, "节点营销": {"4": 0, "3.75": 1, "3.5+": 2, "3.5": 3, "3.5-": 0, "3.25": 0}, "行业营销一组": {"4": 0, "3.75": 5, "3.5+": 5, "3.5": 6, "3.5-": 0, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 2, "3.5+": 4, "3.5": 5, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 4, "3.5+": 3, "3.5": 3, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 0, "3.75": 3, "3.5+": 2, "3.5": 3, "3.5-": 1, "3.25": 0}}}, "2025H1绩效": {"overall": {"4": 0, "3.75": 41, "3.5+": 50, "3.5": 45, "3.5-": 0, "3.25": 0}, "pct": {"4": 0.0, "3.75": 30.1, "3.5+": 36.8, "3.5": 33.1, "3.5-": 0.0, "3.25": 0.0}, "total": 136, "byDept": {"业务培训": {"4": 0, "3.75": 0, "3.5+": 1, "3.5": 4, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 4, "3.5+": 6, "3.5": 7, "3.5-": 0, "3.25": 0}, "内容运营": {"4": 0, "3.75": 0, "3.5+": 4, "3.5": 2, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 3, "3.5+": 6, "3.5": 0, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 5, "3.5+": 5, "3.5": 6, "3.5-": 0, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 2, "3.5+": 4, "3.5": 2, "3.5-": 0, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 4, "3.5+": 6, "3.5": 8, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 4, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 0, "3.75": 1, "3.5+": 5, "3.5": 3, "3.5-": 0, "3.25": 0}, "节点营销": {"4": 0, "3.75": 2, "3.5+": 1, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销一组": {"4": 0, "3.75": 7, "3.5+": 2, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 2, "3.5+": 4, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 3, "3.5+": 3, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 0, "3.75": 3, "3.5+": 1, "3.5": 4, "3.5-": 0, "3.25": 0}}}, "2024年度绩效": {"overall": {"4": 0, "3.75": 34, "3.5+": 44, "3.5": 32, "3.5-": 1, "3.25": 0}, "pct": {"4": 0.0, "3.75": 30.6, "3.5+": 39.6, "3.5": 28.8, "3.5-": 0.9, "3.25": 0.0}, "total": 111, "byDept": {"业务培训": {"4": 0, "3.75": 1, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 4, "3.5+": 4, "3.5": 4, "3.5-": 1, "3.25": 0}, "内容运营": {"4": 0, "3.75": 0, "3.5+": 3, "3.5": 2, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 4, "3.5+": 2, "3.5": 3, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 3, "3.5+": 5, "3.5": 3, "3.5-": 0, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 3, "3.5+": 3, "3.5": 1, "3.5-": 0, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 5, "3.5+": 6, "3.5": 6, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 3, "3.5+": 1, "3.5": 1, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 0, "3.75": 2, "3.5+": 3, "3.5": 3, "3.5-": 0, "3.25": 0}, "节点营销": {"4": 0, "3.75": 2, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销一组": {"4": 0, "3.75": 3, "3.5+": 6, "3.5": 0, "3.5-": 0, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 1, "3.5+": 3, "3.5": 3, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 1, "3.5+": 3, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 0, "3.75": 1, "3.5+": 1, "3.5": 2, "3.5-": 0, "3.25": 0}}}, "2024H1绩效": {"overall": {"4": 1, "3.75": 29, "3.5+": 39, "3.5": 29, "3.5-": 0, "3.25": 0}, "pct": {"4": 1.0, "3.75": 29.6, "3.5+": 39.8, "3.5": 29.6, "3.5-": 0.0, "3.25": 0.0}, "total": 98, "byDept": {"业务培训": {"4": 0, "3.75": 1, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 1, "3.5+": 6, "3.5": 4, "3.5-": 0, "3.25": 0}, "内容运营": {"4": 0, "3.75": 0, "3.5+": 3, "3.5": 1, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 2, "3.5+": 3, "3.5": 3, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 2, "3.5+": 4, "3.5": 2, "3.5-": 0, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 3, "3.5+": 2, "3.5": 2, "3.5-": 0, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 6, "3.5+": 6, "3.5": 5, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 2, "3.5+": 3, "3.5": 0, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 0, "3.75": 3, "3.5+": 2, "3.5": 3, "3.5-": 0, "3.25": 0}, "节点营销": {"4": 0, "3.75": 2, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销一组": {"4": 0, "3.75": 4, "3.5+": 1, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 2, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 1, "3.5+": 0, "3.5": 2, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 1, "3.75": 0, "3.5+": 2, "3.5": 2, "3.5-": 0, "3.25": 0}}}, "2023年度绩效": {"overall": {"4": 1, "3.75": 30, "3.5+": 30, "3.5": 18, "3.5-": 3, "3.25": 0}, "pct": {"4": 1.2, "3.75": 36.6, "3.5+": 36.6, "3.5": 22.0, "3.5-": 3.7, "3.25": 0.0}, "total": 82, "byDept": {"业务培训": {"4": 0, "3.75": 1, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 3, "3.5+": 1, "3.5": 1, "3.5-": 1, "3.25": 0}, "内容运营": {"4": 0, "3.75": 2, "3.5+": 1, "3.5": 0, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 3, "3.5+": 3, "3.5": 1, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 2, "3.5+": 2, "3.5": 2, "3.5-": 0, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 2, "3.5+": 2, "3.5": 2, "3.5-": 1, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 4, "3.5+": 7, "3.5": 5, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 2, "3.5+": 3, "3.5": 0, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 0, "3.75": 3, "3.5+": 1, "3.5": 2, "3.5-": 0, "3.25": 0}, "节点营销": {"4": 0, "3.75": 1, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销一组": {"4": 1, "3.75": 1, "3.5+": 1, "3.5": 1, "3.5-": 1, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 2, "3.5+": 1, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 1, "3.5+": 1, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 0, "3.75": 2, "3.5+": 3, "3.5": 0, "3.5-": 0, "3.25": 0}}}, "2023H1绩效": {"overall": {"4": 2, "3.75": 13, "3.5+": 21, "3.5": 11, "3.5-": 1, "3.25": 0}, "pct": {"4": 4.2, "3.75": 27.1, "3.5+": 43.8, "3.5": 22.9, "3.5-": 2.1, "3.25": 0.0}, "total": 48, "byDept": {"业务培训": {"4": 0, "3.75": 0, "3.5+": 1, "3.5": 0, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 0, "3.5+": 1, "3.5": 2, "3.5-": 0, "3.25": 0}, "内容运营": {"4": 0, "3.75": 0, "3.5+": 0, "3.5": 0, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 1, "3.5+": 3, "3.5": 0, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 1, "3.5+": 1, "3.5": 0, "3.5-": 1, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 1, "3.5+": 1, "3.5": 2, "3.5-": 0, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 3, "3.5+": 5, "3.5": 2, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 2, "3.5+": 0, "3.5": 1, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 1, "3.75": 2, "3.5+": 1, "3.5": 1, "3.5-": 0, "3.25": 0}, "节点营销": {"4": 0, "3.75": 0, "3.5+": 1, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销一组": {"4": 1, "3.75": 0, "3.5+": 2, "3.5": 0, "3.5-": 0, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 1, "3.5+": 0, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 0, "3.5+": 2, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 0, "3.75": 2, "3.5+": 2, "3.5": 0, "3.5-": 0, "3.25": 0}}}, "2022年度绩效": {"overall": {"4": 0, "3.75": 10, "3.5+": 14, "3.5": 6, "3.5-": 1, "3.25": 0}, "pct": {"4": 0.0, "3.75": 32.3, "3.5+": 45.2, "3.5": 19.4, "3.5-": 3.2, "3.25": 0.0}, "total": 31, "byDept": {"业务培训": {"4": 0, "3.75": 0, "3.5+": 1, "3.5": 0, "3.5-": 0, "3.25": 0}, "互动营销": {"4": 0, "3.75": 1, "3.5+": 1, "3.5": 0, "3.5-": 0, "3.25": 0}, "内容运营": {"4": 0, "3.75": 0, "3.5+": 0, "3.5": 0, "3.5-": 0, "3.25": 0}, "品牌及商家赋能": {"4": 0, "3.75": 0, "3.5+": 0, "3.5": 1, "3.5-": 0, "3.25": 0}, "商业市场部": {"4": 0, "3.75": 0, "3.5+": 2, "3.5": 0, "3.5-": 0, "3.25": 0}, "娱乐营销": {"4": 0, "3.75": 1, "3.5+": 0, "3.5": 0, "3.5-": 0, "3.25": 0}, "媒介与项目管理": {"4": 0, "3.75": 2, "3.5+": 3, "3.5": 4, "3.5-": 0, "3.25": 0}, "平台大事件": {"4": 0, "3.75": 2, "3.5+": 1, "3.5": 0, "3.5-": 0, "3.25": 0}, "用户市场组": {"4": 0, "3.75": 2, "3.5+": 1, "3.5": 0, "3.5-": 0, "3.25": 0}, "节点营销": {"4": 0, "3.75": 0, "3.5+": 0, "3.5": 0, "3.5-": 1, "3.25": 0}, "行业营销一组": {"4": 0, "3.75": 1, "3.5+": 0, "3.5": 0, "3.5-": 0, "3.25": 0}, "行业营销三组": {"4": 0, "3.75": 0, "3.5+": 0, "3.5": 1, "3.5-": 0, "3.25": 0}, "行业营销二组": {"4": 0, "3.75": 0, "3.5+": 2, "3.5": 0, "3.5-": 0, "3.25": 0}, "行业营销四组": {"4": 0, "3.75": 1, "3.5+": 3, "3.5": 0, "3.5-": 0, "3.25": 0}}}};
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    data = saved ? JSON.parse(saved) : defaultData();
+  } catch(e) { data = defaultData(); }
+}
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
 
-var ROUND_NAMES = ["2025年度绩效","2025H1绩效","2024年度绩效","2024H1绩效","2023年度绩效","2023H1绩效","2022年度绩效"];
-var PDEPTS = ["业务培训","互动营销","内容运营","品牌及商家赋能","商业市场部","娱乐营销","媒介与项目管理","平台大事件","用户市场组","节点营销","行业营销一组","行业营销三组","行业营销二组","行业营销四组"];
-var SK = ["4","3.75","3.5+","3.5","3.5-","3.25"];
-var SC = {"4":"#7c3aed","3.75":"#16a34a","3.5+":"#2563eb","3.5":"#f59e0b","3.5-":"#ef4444","3.25":"#6b7280"};
+// ══════════════════════════════════════════
+//  评分颜色
+// ══════════════════════════════════════════
+function scoreClass(s) {
+  if (!s) return '';
+  const v = s.trim();
+  if (v === '4.0' || v === '4' || parseFloat(v) >= 4) return 'score-4_0';
+  if (v === '3.75') return 'score-3_75';
+  if (v === '3.5+' || v === '3.5＋') return 'score-3_5plus';
+  if (v === '3.5') return 'score-3_5';
+  if (parseFloat(v) > 3.75) return 'score-4_0';
+  if (parseFloat(v) > 3.5) return 'score-3_75';
+  return 'score-3_5';
+}
 
-// ═══════════════════════════════════════════
-// Chart.js 工具函数
-// ═══════════════════════════════════════════
-Chart.defaults.font.family = "'PingFang SC',system-ui,sans-serif";
-Chart.defaults.font.size = 12;
+// ══════════════════════════════════════════
+//  渲染
+// ══════════════════════════════════════════
+function render() {
+  renderTabs();
+  renderBoards();
+}
 
-var centerText = {id:'centerText',afterDraw:function(chart){
-  if(chart.config.type!=='doughnut')return;
-  var a=chart.chartArea,cx=(a.left+a.right)/2,cy=(a.top+a.bottom)/2;
-  var total=chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);
-  var ctx=chart.ctx;
-  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font='bold 18px PingFang SC';ctx.fillStyle='#222';ctx.fillText(total,cx,cy-8);
-  ctx.font='11px PingFang SC';ctx.fillStyle='#888';ctx.fillText('总计',cx,cy+10);
-  ctx.restore();
-}};
+function renderTabs() {
+  const bar = document.getElementById('tabsBar');
+  const addBtn = bar.querySelector('.tab-add');
+  // 清除旧 tab
+  bar.querySelectorAll('.tab').forEach(t => t.remove());
 
-var pieLabel = {id:'pieLabel',afterDraw:function(chart){
-  if(['doughnut','pie'].indexOf(chart.config.type)<0)return;
-  var ctx=chart.ctx;
-  chart.data.datasets.forEach(function(ds,di){
-    var meta=chart.getDatasetMeta(di);
-    var total=ds.data.reduce(function(a,b){return a+b;},0)||1;
-    meta.data.forEach(function(arc,i){
-      var v=ds.data[i];if(!v)return;
-      var pct=Math.round(v/total*100);
-      var pos=arc.tooltipPosition();
-      ctx.save();
-      ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.font='bold 12px PingFang SC';ctx.fillText(pct+'%',pos.x,pos.y-7);
-      ctx.font='10px PingFang SC';ctx.fillText(v+'人',pos.x,pos.y+7);
-      ctx.restore();
-    });
+  data.periods.forEach(p => {
+    const tab = document.createElement('div');
+    tab.className = 'tab' + (p.id === data.activePeriodId ? ' active' : '');
+    tab.dataset.pid = p.id;
+    tab.innerHTML = `<span onclick="switchPeriod('${p.id}')">${p.title} · ${p.date}</span>
+      <button class="del-tab" onclick="deletePeriod('${p.id}')" title="删除此期">✕</button>`;
+    bar.insertBefore(tab, addBtn);
   });
-}};
+}
 
-var barLabel = {id:'barLabel',afterDatasetsDraw:function(chart){
-  var ctx=chart.ctx;
-  chart.data.datasets.forEach(function(_,di){
-    var meta=chart.getDatasetMeta(di);
-    if(meta.hidden)return;
-    meta.data.forEach(function(bar,i){
-      var v=chart.data.datasets[di].data[i];
-      if(!v)return;
-      var props=bar.getProps(['x','y','width','height'],true);
-      var isH=chart.options.indexAxis==='y';
-      ctx.save();
-      ctx.fillStyle='#fff';ctx.font='bold 11px PingFang SC';
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      if(isH){if(props.width>24)ctx.fillText(v,props.x-props.width/2,props.y);}
-      else{if(props.height>16)ctx.fillText(v,props.x,props.y+props.height/2);}
-      ctx.restore();
-    });
+function renderBoards() {
+  const container = document.getElementById('boards');
+  container.innerHTML = '';
+  data.periods.forEach(p => {
+    container.appendChild(buildBoard(p));
   });
-}};
-
-function mkBar(id,labels,data,colors,horiz){
-  var el=document.getElementById(id);if(!el)return null;
-  var ctx=el.getContext('2d');
-  return new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderRadius:4}]},
-    plugins:[barLabel],
-    options:{indexAxis:horiz?'y':'x',responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{x:{grid:{display:!horiz},ticks:{maxRotation:30,font:{size:10}}},
-              y:{grid:{display:horiz},beginAtZero:true,ticks:{font:{size:10}}}}}});
-}
-function mkPie(id,labels,data,colors){
-  var el=document.getElementById(id);if(!el)return null;
-  var ctx=el.getContext('2d');
-  return new Chart(ctx,{type:'doughnut',data:{labels:labels,datasets:[{data:data,backgroundColor:colors,borderWidth:2}]},
-    plugins:[centerText,pieLabel],
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'right',labels:{font:{size:11},padding:8}}}}});
 }
 
-function showTab(i){
-  document.querySelectorAll('.panel').forEach(function(p,j){p.classList.toggle('active',i===j);});
-  document.querySelectorAll('.tab-btn').forEach(function(b,j){b.classList.toggle('active',i===j);});
+function buildBoard(p) {
+  const div = document.createElement('div');
+  div.className = 'board' + (p.id === data.activePeriodId ? ' active' : '');
+  div.id = 'board-' + p.id;
+
+  div.innerHTML = `
+  <div class="board-header">
+    <div class="board-title">
+      <span class="board-title-icon">📋</span>
+      <span contenteditable="true" data-field="title" data-pid="${p.id}"
+        onblur="saveField(this,'title','${p.id}')">${p.title}</span>
+      <span style="font-weight:400;color:#9ca3af">·</span>
+      <span contenteditable="true" data-field="date" data-pid="${p.id}"
+        onblur="saveField(this,'date','${p.id}')">${p.date}</span>
+    </div>
+    <div class="board-judges">
+      <b>评委：</b>
+      <div class="judge-mgr" id="judges-${p.id}">
+        ${p.judges.map((j,i) => `
+          <span class="judge-tag">
+            <span contenteditable="true"
+              onblur="saveJudge(this,'${p.id}',${i})">${j}</span>
+            <button class="del-judge" onclick="removeJudge('${p.id}',${i})">×</button>
+          </span>
+        `).join('')}
+        <input class="judge-input" placeholder="+ 添加评委" id="newJudge-${p.id}"
+          onkeydown="if(event.key==='Enter')addJudge('${p.id}')">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-scroll">
+      <table id="table-${p.id}">
+        <thead>
+          <tr>
+            <th style="min-width:100px">薯名</th>
+            <th style="min-width:100px">小组</th>
+            <th style="min-width:50px">L1</th>
+            <th style="min-width:90px">入职日期</th>
+            <th style="min-width:80px">述职文档</th>
+            ${p.judges.map(j=>`<th class="score-cell">${j}</th>`).join('')}
+            <th class="col-total" style="min-width:60px">综合</th>
+            <th style="min-width:40px"></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-${p.id}">
+          ${p.rows.map(r => buildRow(p, r)).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div class="board-footer">
+      <button class="btn btn-green" onclick="addRow('${p.id}')">➕ 添加新人</button>
+    </div>
+  </div>
+
+  <div class="delay-section">
+    <div class="delay-label">⚠️ 延期述职</div>
+    <div contenteditable="true" data-field="delays" data-pid="${p.id}"
+      onblur="saveField(this,'delays','${p.id}')"
+      style="margin-top:4px;min-height:20px">${p.delays || '（暂无延期述职）'}</div>
+  </div>
+  `;
+  return div;
 }
 
-// ═══════════════════════════════════════════
-// Panel0：图表初始化
-// ═══════════════════════════════════════════
-var p0TagChart  = mkPie('c0-tag', TAG_L, TAG_V, TAG_L.map(function(t){return TAG_C[t]||'#ccc';}));
-var p0DeptChart = mkBar('c0-dept', DEPTS, DCOUNTS, DCOUNTS.map(function(){return '#ff2442';}), true);
-var p0TenChart  = mkBar('c0-tenure', TEN_L, TEN_V, ['#dbeafe','#93c5fd','#60a5fa','#3b82f6','#1d4ed8'], false);
-var perfPieChart = null, perfStackChart = null;
+function buildRow(p, r) {
+  const scoreCols = p.judges.map(j => {
+    const s = r.scores[j] || { score: '', comment: '' };
+    return `<td class="score-cell">
+      <div class="score ${scoreClass(s.score)}" contenteditable="true"
+        onblur="saveScore(this,'${p.id}','${r.id}','${j}','score')"
+        oninput="applyScoreColor(this)">${s.score}</div>
+      <div class="score-comment" contenteditable="true"
+        onblur="saveScore(this,'${p.id}','${r.id}','${j}','comment')">${s.comment}</div>
+    </td>`;
+  }).join('');
 
-// ═══════════════════════════════════════════
-// 绩效渲染（依赖 curDept0 / curPerfRound）
-// ═══════════════════════════════════════════
-function renderPerfSection(rname){
-  curPerfRound = rname;
-  var d = PERF_ALL[rname];
-  var isAll = (curDept0 === '全部');
-  var deptPerf = isAll ? d.overall : (d.byDept[curDept0] || {});
-  var deptTotal = SK.reduce(function(s,k){return s+(deptPerf[k]||0);}, 0);
+  return `<tr id="row-${p.id}-${r.id}">
+    <td>
+      <div class="cell-name" contenteditable="true"
+        onblur="saveRowField(this,'${p.id}','${r.id}','name')">${r.name}</div>
+    </td>
+    <td>
+      <div contenteditable="true" onblur="saveRowField(this,'${p.id}','${r.id}','group')">${r.group}</div>
+      <div class="cell-sub" contenteditable="true" onblur="saveRowField(this,'${p.id}','${r.id}','city')">${r.city}</div>
+    </td>
+    <td>
+      <div contenteditable="true" onblur="saveRowField(this,'${p.id}','${r.id}','l1')">${r.l1}</div>
+    </td>
+    <td>
+      <div contenteditable="true" onblur="saveRowField(this,'${p.id}','${r.id}','joinDate')">${r.joinDate}</div>
+    </td>
+    <td class="cell-doc">
+      <a href="${r.docUrl}" target="_blank" id="doclink-${p.id}-${r.id}">📎 查看文档</a>
+      <div style="margin-top:3px">
+        <button class="btn" style="font-size:11px;padding:2px 6px"
+          onclick="editDocUrl('${p.id}','${r.id}')">✏️ 改链接</button>
+      </div>
+    </td>
+    ${scoreCols}
+    <td>
+      <div class="score score-total ${scoreClass(r.total)}" contenteditable="true"
+        onblur="saveRowField(this,'${p.id}','${r.id}','total')"
+        oninput="applyScoreColor(this)">${r.total}</div>
+    </td>
+    <td>
+      <div class="row-actions">
+        <button class="btn-icon" onclick="deleteRow('${p.id}','${r.id}')" title="删除此行">🗑</button>
+      </div>
+    </td>
+  </tr>`;
+}
 
-  var cov = document.getElementById('perf-coverage');
-  if(cov) cov.textContent = rname + (isAll ? '' : ' · '+curDept0) + '：共 ' + deptTotal + ' 人有数据（在职员工 '+(isAll?182:(DCOUNTS[DEPTS.indexOf(curDept0)]||'-'))+' 人）';
+// ══════════════════════════════════════════
+//  交互处理
+// ══════════════════════════════════════════
 
-  // 饼图
-  var idxs = SK.map(function(s,i){return (deptPerf[s]||0)>0?i:-1;}).filter(function(i){return i>=0;});
-  if(perfPieChart){perfPieChart.destroy();perfPieChart=null;}
-  var pieEl = document.getElementById('c0-perf-pie');
-  if(pieEl) perfPieChart = new Chart(pieEl.getContext('2d'),{type:'doughnut',
-    data:{labels:idxs.map(function(i){return SK[i];}),datasets:[{data:idxs.map(function(i){return deptPerf[SK[i]]||0;}),backgroundColor:idxs.map(function(i){return SC[SK[i]];}),borderWidth:2}]},
-    plugins:[centerText,pieLabel],
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:11},padding:8}}}}});
+function switchPeriod(pid) {
+  data.activePeriodId = pid;
+  saveData();
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.pid === pid));
+  document.querySelectorAll('.board').forEach(b => b.classList.toggle('active', b.id === 'board-'+pid));
+}
 
-  // 进度条
-  var cont = document.getElementById('perf-bars');
-  if(cont){
-    var maxV = Math.max.apply(null, SK.map(function(s){return deptPerf[s]||0;}).concat([1]));
-    cont.innerHTML = SK.map(function(s){
-      var v = deptPerf[s]||0;
-      var pct = deptTotal>0 ? (v/deptTotal*100).toFixed(1) : '0.0';
-      var w = v>0 ? Math.max(Math.round(v/maxV*100),4) : 0;
-      return '<div class="perf-bar-row">'
-        +'<div class="perf-bar-label" style="font-weight:'+(v>0?'600':'400')+';color:'+(v>0?SC[s]:'#bbb')+'">'+s+'</div>'
-        +'<div class="perf-bar-bg">'+(v>0
-          ?'<div class="perf-bar-fill" style="width:'+w+'%;background:'+SC[s]+'"><span>'+v+'人 '+pct+'%</span></div>'
-          :'<div style="padding:3px 8px;font-size:11px;color:#bbb">0人</div>')
-        +'</div></div>';
-    }).join('');
+function addPeriod() {
+  document.getElementById('periodNameInput').value = '';
+  openModal('addPeriodModal');
+  setTimeout(() => document.getElementById('periodNameInput').focus(), 100);
+}
+
+function confirmAddPeriod() {
+  const val = document.getElementById('periodNameInput').value.trim();
+  let title = '新述职期', date = '';
+  if (val) {
+    const m = val.match(/^(.*?)·(.*)$/);
+    if (m) { title = m[1].trim(); date = m[2].trim(); }
+    else { title = val; date = ''; }
   }
+  const id = 'p' + Date.now();
+  data.periods.push({
+    id, title, date,
+    judges: ['评委A','评委B'],
+    rows: [],
+    delays: ''
+  });
+  data.activePeriodId = id;
+  closeModal('addPeriodModal');
+  saveData();
+  render();
+}
 
-  // 堆叠柱图
-  if(perfStackChart){perfStackChart.destroy();perfStackChart=null;}
-  var stackEl = document.getElementById('c0-perf-stack');
-  if(stackEl){
-    var stackDepts = isAll ? PDEPTS : [curDept0];
-    perfStackChart = new Chart(stackEl.getContext('2d'),{type:'bar',
-      data:{labels:stackDepts,datasets:SK.map(function(s){return {label:s,data:stackDepts.map(function(dp){return (d.byDept[dp]||{})[s]||0;}),backgroundColor:SC[s],borderRadius:2};})},
-      plugins:[barLabel],
-      options:{responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{position:'top',labels:{font:{size:11},padding:6}}},
-        scales:{x:{stacked:true,ticks:{font:{size:10},maxRotation:35}},y:{stacked:true,beginAtZero:true}}}});
+function deletePeriod(pid) {
+  if (data.periods.length <= 1) { toast('至少保留一期！'); return; }
+  if (!confirm('确定删除此期？')) return;
+  data.periods = data.periods.filter(p => p.id !== pid);
+  if (data.activePeriodId === pid) data.activePeriodId = data.periods[0].id;
+  saveData(); render();
+}
+
+function saveField(el, field, pid) {
+  const p = data.periods.find(p => p.id === pid);
+  if (p) { p[field] = el.innerText.trim(); saveData(); }
+  // 同步 tab 标题
+  if (field === 'title' || field === 'date') renderTabs();
+}
+
+function saveJudge(el, pid, idx) {
+  const p = data.periods.find(p => p.id === pid);
+  if (p) { p.judges[idx] = el.innerText.trim(); saveData(); }
+}
+
+function removeJudge(pid, idx) {
+  const p = data.periods.find(p => p.id === pid);
+  if (!p) return;
+  const judge = p.judges[idx];
+  if (!confirm(`删除评委「${judge}」？此评委的所有评分将一并删除。`)) return;
+  p.judges.splice(idx, 1);
+  p.rows.forEach(r => { delete r.scores[judge]; });
+  saveData(); render(); switchPeriod(pid);
+}
+
+function addJudge(pid) {
+  const input = document.getElementById('newJudge-' + pid);
+  const name = input.value.trim();
+  if (!name) return;
+  const p = data.periods.find(p => p.id === pid);
+  if (!p) return;
+  if (p.judges.includes(name)) { toast('评委已存在'); return; }
+  p.judges.push(name);
+  p.rows.forEach(r => { if (!r.scores[name]) r.scores[name] = { score: '', comment: '' }; });
+  saveData(); render(); switchPeriod(pid);
+}
+
+function saveScore(el, pid, rid, judge, field) {
+  const p = data.periods.find(p => p.id === pid);
+  if (!p) return;
+  const r = p.rows.find(r => r.id === rid);
+  if (!r) return;
+  if (!r.scores[judge]) r.scores[judge] = { score: '', comment: '' };
+  r.scores[judge][field] = el.innerText.trim();
+  saveData();
+}
+
+function saveRowField(el, pid, rid, field) {
+  const p = data.periods.find(p => p.id === pid);
+  if (!p) return;
+  const r = p.rows.find(r => r.id === rid);
+  if (!r) return;
+  r[field] = el.innerText.trim();
+  saveData();
+  // 综合列颜色
+  if (field === 'total') applyScoreColor(el);
+}
+
+function applyScoreColor(el) {
+  const v = el.innerText.trim();
+  el.className = el.className.replace(/score-\S+/g, '').trim();
+  const cls = scoreClass(v);
+  if (cls) el.classList.add(cls);
+}
+
+function addRow(pid) {
+  const p = data.periods.find(p => p.id === pid);
+  if (!p) return;
+  const id = 'r' + Date.now();
+  const scores = {};
+  p.judges.forEach(j => { scores[j] = { score: '', comment: '' }; });
+  const row = { id, name: '新人(真名)', group: '小组', city: '城市', l1: '', joinDate: '', docUrl: '#', scores, total: '' };
+  p.rows.push(row);
+  saveData();
+  const tbody = document.getElementById('tbody-' + pid);
+  const tr = document.createElement('tr');
+  tr.id = `row-${pid}-${id}`;
+  tr.innerHTML = buildRow(p, row).replace(/^<tr[^>]*>/, '').replace(/<\/tr>$/, '');
+  tbody.appendChild(tr);
+  toast('新人已添加，请直接编辑各格内容');
+}
+
+function deleteRow(pid, rid) {
+  const p = data.periods.find(p => p.id === pid);
+  if (!p) return;
+  const row = p.rows.find(r => r.id === rid);
+  if (!confirm(`删除「${row?.name || '此行'}」？`)) return;
+  p.rows = p.rows.filter(r => r.id !== rid);
+  saveData();
+  const tr = document.getElementById(`row-${pid}-${rid}`);
+  if (tr) tr.remove();
+}
+
+// 文档链接
+function editDocUrl(pid, rid) {
+  const p = data.periods.find(p => p.id === pid);
+  const r = p?.rows.find(r => r.id === rid);
+  if (!r) return;
+  currentDocTarget = { pid, rid };
+  document.getElementById('docUrlInput').value = r.docUrl === '#' ? '' : r.docUrl;
+  openModal('docModal');
+  setTimeout(() => document.getElementById('docUrlInput').focus(), 100);
+}
+
+function saveDocUrl() {
+  if (!currentDocTarget) return;
+  const { pid, rid } = currentDocTarget;
+  const url = document.getElementById('docUrlInput').value.trim() || '#';
+  const p = data.periods.find(p => p.id === pid);
+  const r = p?.rows.find(r => r.id === rid);
+  if (r) {
+    r.docUrl = url;
+    saveData();
+    const link = document.getElementById(`doclink-${pid}-${rid}`);
+    if (link) link.href = url;
+    toast('文档链接已保存');
+  }
+  closeModal('docModal');
+}
+
+// ══════════════════════════════════════════
+//  导入/导出
+// ══════════════════════════════════════════
+function exportData() {
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `gd_review_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('已导出 JSON 文件');
+}
+
+function importData() {
+  document.getElementById('importText').value = '';
+  openModal('importModal');
+}
+
+function doImport() {
+  try {
+    const json = document.getElementById('importText').value.trim();
+    const imported = JSON.parse(json);
+    if (!imported.periods) throw new Error('格式不正确');
+    data = imported;
+    saveData(); render();
+    closeModal('importModal');
+    toast('✅ 导入成功');
+  } catch(e) {
+    alert('JSON 格式错误：' + e.message);
   }
 }
 
-// ═══════════════════════════════════════════
-// 部门筛选联动
-// ═══════════════════════════════════════════
-function refreshPanel0(){
-  var isAll = (curDept0 === '全部');
-
-  // 人才标签
-  var tagV = isAll ? TAG_V : (TAG_BY_DEPT[curDept0] || [0,0,0,0]);
-  p0TagChart.data.datasets[0].data = tagV;
-  p0TagChart.update();
-
-  // 小组人数（高亮选中）
-  p0DeptChart.data.datasets[0].backgroundColor = DEPTS.map(function(d){
-    return (isAll || d===curDept0) ? '#ff2442' : '#fca5a5';
-  });
-  p0DeptChart.update();
-
-  // 司龄
-  var tenV = isAll ? TEN_V : (TEN_BY_DEPT[curDept0] || [0,0,0,0,0]);
-  p0TenChart.data.datasets[0].data = tenV;
-  p0TenChart.update();
-
-  // 绩效
-  renderPerfSection(curPerfRound);
+function resetData() {
+  if (!confirm('确定清空所有数据，恢复为初始示例？')) return;
+  data = defaultData();
+  saveData(); render();
+  toast('已重置为初始数据');
 }
 
-function setDept0(btn, dept){
-  document.querySelectorAll('#panel-0 .dept-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  curDept0 = dept;
-  refreshPanel0();
+// ══════════════════════════════════════════
+//  模态框
+// ══════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+});
+
+// ══════════════════════════════════════════
+//  Toast
+// ══════════════════════════════════════════
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
 }
 
-function switchPerfRound(btn, rname){
-  document.querySelectorAll('#perf-round-bar .dept-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  renderPerfSection(rname);
-}
-
-// 初始渲染绩效
-renderPerfSection('2025年度绩效');
-
-// ═══════════════════════════════════════════
-// 其他Panel图表
-// ═══════════════════════════════════════════
-
-// 目标对比
-// Panel1 (charts removed, KPI driven by setDept1)
-
-// Panel2
-mkPie('c2-type',LFT_L,LFT_V,['#ef4444','#f59e0b']);
-mkBar('c2-reason',RSN_L,RSN_V,RSN_V.map(function(){return '#f87171';}),true);
-
-// Panel3
-(function(){
-  var el=document.getElementById('c3-level');if(!el)return;
-  var order=['L4','L3','L2','L1','IC'];
-  new Chart(el.getContext('2d'),{type:'bar',data:{labels:order,datasets:[{
-    data:order.map(function(k){return LEVEL[k]||0;}),
-    backgroundColor:['#7c3aed','#2563eb','#16a34a','#f59e0b','#ff2442'],borderRadius:4
-  }]},plugins:[barLabel],options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-})();
-(function(){
-  var el=document.getElementById('c3-tag');if(!el)return;
-  var tags=['突破期','成熟期','投资期','年轻人才'];
-  new Chart(el.getContext('2d'),{type:'bar',data:{labels:tags,datasets:[
-    {label:'IC',data:tags.map(function(t){return IC_TAG[t]||0;}),backgroundColor:'#60a5fa',borderRadius:4},
-    {label:'Leader',data:tags.map(function(t){return LDR_TAG[t]||0;}),backgroundColor:'#34d399',borderRadius:4}
-  ]},plugins:[barLabel],options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}}}});
-})();
-
-// ═══════════════════════════════════════════
-// Panel1 试用期名单数据
-// ═══════════════════════════════════════════
-var TRIAL_LIST = [
-  {name:'大鱼(张瑜)',dept:'节点营销',manager:'未希(施维)',join:'2025-09-10',age:29,prev:'知乎',edu:'硕士研究生',school:'英国利兹大学',status:'已转正',gd:true},
-  {name:'斯比(张琦)',dept:'商业市场部',manager:'又思(徐速)',join:'2025-09-10',age:31,prev:'',edu:'本科',school:'东华大学',status:'已转正',gd:true},
-  {name:'井野(魏欣)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-09-10',age:28,prev:'',edu:'硕士研究生',school:'杜伦大学',status:'已转正',gd:true},
-  {name:'小枝(王笑妍)',dept:'娱乐营销',manager:'科林(罗意林)',join:'2025-09-19',age:31,prev:'',edu:'本科',school:'浙江财经大学',status:'已转正',note:'待汰换'},
-  {name:'雪梨(陈姝羽)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-09-22',age:26,prev:'',edu:'硕士研究生',school:'剑桥大学',status:'已转正',gd:true},
-  {name:'弯弯(唐婉)',dept:'商业市场部',manager:'又思(徐速)',join:'2025-09-29',age:30,prev:'',edu:'本科',school:'西北大学',status:'已转正',gd:true},
-  {name:'娜丁(丁增德吉)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-15',age:26,prev:'腾讯音乐娱乐（上海）有限公司',edu:'硕士研究生',school:'美国哥伦比亚大学',status:'试用期中'},
-  {name:'柏瑞(许冰)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-10-22',age:30,prev:'携程集团',edu:'本科',school:'纽约大学',status:'试用期中',gd:true},
-  {name:'曼曼(刘佳)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-10-27',age:29,prev:'华为',edu:'硕士研究生',school:'香港中文大学',status:'试用期中',gd:true},
-  {name:'梁爽(梁爽)',dept:'行业营销三组',manager:'存希(林晨)',join:'2025-10-29',age:26,prev:'上海京东鸿为贸易有限公司',edu:'本科',school:'北京工商大学',status:'试用期中'},
-  {name:'千凝(王梦巧)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-11-12',age:26,prev:'上海得物信息集团有限公司',edu:'本科',school:'河海大学',status:'试用期中'},
-  {name:'芙芙(傅媛媛)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2025-12-03',age:24,prev:'北京达佳互联信息技术有限公司',edu:'本科',school:'宁波大学',status:'试用期中'},
-  {name:'青鸟(崔玫)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:26,prev:'拼多多',edu:'本科',school:'上海对外经贸大学',status:'试用期中'},
-  {name:'兰莉(谭钶颖)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-08',age:25,prev:'深圳方程豹汽车销售有限责任公司',edu:'硕士研究生',school:'香港大学',status:'试用期中'},
-  {name:'碧琪(邬佳宁)',dept:'内容运营',manager:'地球(邹瑞)',join:'2025-12-10',age:26,prev:'浙江天猫技术有限公司',edu:'本科',school:'四川大学',status:'试用期中'},
-  {name:'玟星(伍芳萍)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2025-12-10',age:31,prev:'湖南快乐阳光互动传媒有限公司',edu:'本科',school:'上海大学',status:'试用期中'},
-  {name:'董董(董海羽)',dept:'行业营销二组',manager:'未希(施维)',join:'2025-12-12',age:30,prev:'法本信息科技有限公司',edu:'硕士研究生',school:'纽卡斯尔大学',status:'试用期中'},
-  {name:'和和(张彤)',dept:'平台大事件',manager:'佩吉(马小婷)',join:'2025-12-15',age:30,prev:'北京卡路里科技有限公司',edu:'本科',school:'吉林财经大学',status:'试用期中'},
-  {name:'美叽(韩亦忱)',dept:'互动营销',manager:'吉森(王成钢)',join:'2025-12-24',age:23,prev:'通用汽车中国',edu:'本科',school:'中国劳动关系学院',status:'试用期中'},
-  {name:'之零(苏婧葭)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-01-05',age:27,prev:'雅诗兰黛（上海）商贸有限公司',edu:'本科',school:'多伦多大学',status:'试用期中'},
-  {name:'鱼蛋(蒋璐蔚)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-01-05',age:27,prev:'携程旅游网络技术(上海)有限公司',edu:'本科',school:'国际关系学院',status:'试用期中'},
-  {name:'可儿(李可尔)',dept:'节点营销',manager:'未希(施维)',join:'2026-01-19',age:24,prev:'—',edu:'硕士研究生',school:'墨尔本大学',status:'试用期中'},
-  {name:'伊瞳(张溪倬)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-01-19',age:32,prev:'百度',edu:'本科',school:'北京城市学院',status:'试用期中'},
-  {name:'千佳(邓林兮)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-01-26',age:24,prev:'深圳市大疆创新科技有限公司',edu:'本科',school:'同济大学',status:'试用期中'},
-  {name:'思怡(张悦)',dept:'行业营销三组',manager:'存希(林晨)',join:'2026-02-02',age:30,prev:'哈啰',edu:'硕士研究生',school:'厦门大学',status:'试用期中'},
-  {name:'临戈(汤斯麟)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-06',age:25,prev:'北京达佳互联信息技术有限公司',edu:'硕士研究生',school:'北京大学',status:'试用期中'},
-  {name:'敦子(陶伊晴)',dept:'行业营销一组',manager:'尤弥(范晓音)',join:'2026-02-09',age:29,prev:'字节跳动',edu:'硕士研究生',school:'Durham University',status:'试用期中'},
-  {name:'荻野(田凯雯)',dept:'互动营销',manager:'吉森(王成钢)',join:'2026-02-09',age:28,prev:'字节跳动-懂车帝',edu:'硕士研究生',school:'英国格拉斯哥大学',status:'试用期中'},
-  {name:'赤也(章梓禧)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-02-11',age:25,prev:'腾讯',edu:'硕士研究生',school:'香港中文大学',status:'试用期中'},
-  {name:'启夏(蒋演)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-02-13',age:27,prev:'',edu:'硕士研究生',school:'曼彻斯特大学',status:'待离职'},
-  {name:'萧遥(刘雪杨)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-02-25',age:28,prev:'沃尔沃汽车',edu:'硕士研究生',school:'纽约大学',status:'试用期中'},
-  {name:'朱诺(廖可萱)',dept:'品牌及商家赋能',manager:'伽马(李莉娜)',join:'2026-02-27',age:26,prev:'上海容么么数字科技有限公司',edu:'硕士研究生',school:'伦敦政治经济学院',status:'试用期中'},
-  {name:'流明(余屹轩)',dept:'行业营销四组',manager:'地球(邹瑞)',join:'2026-03-09',age:25,prev:'—',edu:'硕士研究生',school:'伦敦政治经济学院',status:'试用期中'},
-  {name:'彭花(沈玥)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-11',age:30,prev:'上海今日头条网络技术有限公司',edu:'硕士研究生',school:'香港浸会大学',status:'试用期中'},
-  {name:'小唯(孙鲁燕)',dept:'用户市场组',manager:'来克(汪博)',join:'2026-03-13',age:28,prev:'字节跳动',edu:'硕士研究生',school:'伦敦大学学院',status:'试用期中'},
-  {name:'藏原(李奕飞)',dept:'节点营销',manager:'未希(施维)',join:'2026-03-23',age:25,prev:'—',edu:'硕士研究生',school:'伦敦大学学院',status:'试用期中'},
-  {name:'绿子(赵阑婷)',dept:'商业市场部',manager:'又思(徐速)',join:'2026-03-23',age:31,prev:'内蒙古伊利实业集团股份有限公司',edu:'本科',school:'北京工商大学',status:'试用期中'},
-  {name:'莫妮(黄婷婷)',dept:'媒介与项目管理',manager:'佩吉(马小婷)',join:'2026-03-25',age:27,prev:'万科',edu:'硕士研究生',school:'复旦大学',status:'试用期中'}
-];
-
-function renderTrialTable(dept) {
-  var list = dept === '全部' ? TRIAL_LIST : TRIAL_LIST.filter(function(p){ return p.dept === dept; });
-  var tb = document.getElementById('trial-table');
-  if (!tb) return;
-  var rows = '<tr><th>薯名</th><th>状态</th><th>部门</th><th>直接上级</th><th>入职日期</th><th>年龄</th><th>前公司</th><th>学历</th><th>学校</th></tr>';
-  list.forEach(function(p) {
-    var eduColor = p.edu.indexOf('硕士') >= 0 ? 'color:#2563eb' : '';
-    var statusStyle = p.status === '试用期中'
-      ? 'background:#fef9c3;color:#854d0e'
-      : p.status === '已转正'
-      ? 'background:#dcfce7;color:#15803d'
-      : 'background:#fee2e2;color:#b91c1c';
-    var statusTag = '<span style="display:inline-block;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:600;' + statusStyle + '">' + p.status + '</span>';
-    var gdTag = p.gd ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#dcfce7;color:#16a34a;font-weight:600;vertical-align:middle">已GD</span>' : '';
-    var noteTag = p.note ? ' <span style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#fee2e2;color:#b91c1c;font-weight:600;vertical-align:middle">' + p.note + '</span>' : '';
-    rows += '<tr>' +
-      '<td><strong>' + p.name + '</strong>' + gdTag + noteTag + '</td>' +
-      '<td>' + statusTag + '</td>' +
-      '<td>' + p.dept + '</td>' +
-      '<td>' + p.manager + '</td>' +
-      '<td>' + p.join + '</td>' +
-      '<td>' + p.age + '岁</td>' +
-      '<td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="' + p.prev + '">' + (p.prev || '—') + '</td>' +
-      '<td style="' + eduColor + ';font-weight:600">' + p.edu + '</td>' +
-      '<td>' + p.school + '</td>' +
-      '</tr>';
-  });
-  tb.innerHTML = rows;
-  var total = list.length;
-  var inprogress = list.filter(function(p){ return p.status === '试用期中'; }).length;
-  var passed = list.filter(function(p){ return p.status === '已转正'; }).length;
-  var leaving = list.filter(function(p){ return p.status === '待离职'; }).length;
-  var el = document.getElementById('trial-count'); if(el) el.textContent = total;
-  var el2 = document.getElementById('trial-inprogress'); if(el2) el2.textContent = inprogress;
-  var el3 = document.getElementById('trial-passed'); if(el3) el3.textContent = passed;
-  var el4 = document.getElementById('trial-leaving'); if(el4) el4.textContent = leaving;
-}
-
-// 页面加载时渲染全量
-(function(){ renderTrialTable('全部'); })();
-
-// ═══════════════════════════════════════════
-// Panel1 新人Landing 部门筛选数据
-// ═══════════════════════════════════════════
-var LANDING_DATA = {
-  '全部':        {total:182, le1y:64, trial:32},
-  '媒介与项目管理': {total:25,  le1y:7,  trial:6},
-  '商业市场部':   {total:23,  le1y:10, trial:5},
-  '互动营销':    {total:21,  le1y:7,  trial:3},
-  '行业营销一组': {total:17,  le1y:8,  trial:3},
-  '用户市场组':   {total:12,  le1y:4,  trial:2},
-  '行业营销三组': {total:12,  le1y:5,  trial:3},
-  '行业营销四组': {total:11,  le1y:5,  trial:2},
-  '品牌及商家赋能':{total:11,  le1y:2,  trial:2},
-  '行业营销二组': {total:10,  le1y:4,  trial:2},
-  '平台大事件':   {total:10,  le1y:4,  trial:1},
-  '娱乐营销':    {total:9,   le1y:2,  trial:0},
-  '节点营销':    {total:8,   le1y:3,  trial:2},
-  '内容运营':    {total:7,   le1y:2,  trial:1},
-  '业务培训':    {total:5,   le1y:1,  trial:0}
-};
-
-function setDept1(btn, dept) {
-  document.querySelectorAll('#panel-1 .dept-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-  var d = LANDING_DATA[dept] || LANDING_DATA['全部'];
-  var newpct = d.total > 0 ? (d.le1y / d.total * 100).toFixed(1) + '%' : '0%';
-  var trialpct = d.total > 0 ? (d.trial / d.total * 100).toFixed(1) + '%' : '0%';
-  document.getElementById('p1-total').textContent = d.total;
-  document.getElementById('p1-le1y').textContent = d.le1y;
-  document.getElementById('p1-newpct').textContent = newpct;
-  document.getElementById('p1-trial').textContent = d.trial;
-  document.getElementById('p1-trialpct').textContent = trialpct;
-  renderTrialTable(dept);
-}
-
-function setDept2(btn,dept){
-  document.querySelectorAll('#panel-2 .dept-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
-}
-
-// ═══════════════════════════════════════════
-// GD 项目背景 可编辑块
-// ═══════════════════════════════════════════
-var GD_BG_KEY = 'gd_bg_content';
-
-// 启动时从 localStorage 恢复内容
-(function(){
-  var saved = localStorage.getItem(GD_BG_KEY);
-  if(saved) {
-    var view = document.getElementById('gd-bg-view');
-    if(view) view.innerHTML = saved;
-  }
-})();
-
-function execCmd(cmd, val) {
-  document.getElementById('gd-bg-editable').focus();
-  document.execCommand(cmd, false, val || null);
-}
-
-function toggleGdEdit() {
-  var view = document.getElementById('gd-bg-view');
-  var editor = document.getElementById('gd-bg-editor');
-  var editable = document.getElementById('gd-bg-editable');
-  var btn = document.getElementById('gd-edit-btn');
-  editable.innerHTML = view.innerHTML;
-  view.style.display = 'none';
-  editor.style.display = 'block';
-  btn.style.display = 'none';
-  editable.focus();
-}
-
-function saveGdBg() {
-  var view = document.getElementById('gd-bg-view');
-  var editor = document.getElementById('gd-bg-editor');
-  var editable = document.getElementById('gd-bg-editable');
-  var btn = document.getElementById('gd-edit-btn');
-  var html = editable.innerHTML;
-  view.innerHTML = html;
-  localStorage.setItem(GD_BG_KEY, html);
-  view.style.display = 'block';
-  editor.style.display = 'none';
-  btn.style.display = '';
-}
-
-function cancelGdEdit() {
-  var view = document.getElementById('gd-bg-view');
-  var editor = document.getElementById('gd-bg-editor');
-  var btn = document.getElementById('gd-edit-btn');
-  view.style.display = 'block';
-  editor.style.display = 'none';
-  btn.style.display = '';
-}
+// ══════════════════════════════════════════
+//  启动
+// ══════════════════════════════════════════
+loadData();
+render();
 </script>
-</body></html>
+</body>
+</html>
