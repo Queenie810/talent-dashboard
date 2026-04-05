@@ -1577,5 +1577,50 @@ function cancelGdEdit() {
   editor.style.display = 'none';
   btn.style.display = '';
 }
+
+// ═══════════════════════════════════════════
+// 通用 contenteditable 自动保存 / 恢复
+// key: ce_v1_<index>  按页面顺序编号，刷新后恢复
+// ═══════════════════════════════════════════
+(function(){
+  var STORE_PREFIX = 'ce_v1_';
+  var debounceTimers = {};
+
+  function getAll() {
+    // 排除 gd-bg-editable（有自己的保存逻辑）
+    return Array.from(document.querySelectorAll('[contenteditable="true"]'))
+      .filter(function(el){ return el.id !== 'gd-bg-editable'; });
+  }
+
+  function saveOne(idx, el) {
+    clearTimeout(debounceTimers[idx]);
+    debounceTimers[idx] = setTimeout(function(){
+      localStorage.setItem(STORE_PREFIX + idx, el.innerHTML);
+    }, 400);
+  }
+
+  function restoreAll() {
+    var els = getAll();
+    els.forEach(function(el, idx){
+      var saved = localStorage.getItem(STORE_PREFIX + idx);
+      if(saved !== null) el.innerHTML = saved;
+    });
+  }
+
+  function bindAll() {
+    var els = getAll();
+    els.forEach(function(el, idx){
+      el.addEventListener('input', function(){ saveOne(idx, el); });
+    });
+  }
+
+  // 页面加载完成后恢复 + 绑定
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ restoreAll(); bindAll(); });
+  } else {
+    restoreAll();
+    bindAll();
+  }
+})();
 </script>
 </body></html>
